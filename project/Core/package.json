@@ -3,10 +3,13 @@
     "version": "1.0.0",
     "scripts": {
         "compile": "tsc",
-        "pack": "ng-packagr"
+        "pack": "ng-packagr -p ng-package.json && cd dist && npm pack && copy planet-defender-core-*.tgz ..\\..\\Core-Compiled && cd .. && rmdir dist /q /s"
     },
-    "dependencies": {
+    "peerDependencies": {
+        "@angular/compiler": "^6.0.5",
+        "@angular/compiler-cli": "^6.0.5",
+        "@angular/core": "^6.0.5",
         "ng-packagr": "^3.0.3",
-        "typescript": "^2.9.2"
+        "typescript": "~2.7.2"
     }
 }
