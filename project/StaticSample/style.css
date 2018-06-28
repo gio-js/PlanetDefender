@@ -1,0 +1,66 @@
+.game-container {
+    top: 54px;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: calc(100vh - 54px);
+    overflow: hidden;
+    position: absolute;
+    cursor: pointer;
+}
+
+.game-container > .map {
+    width: 6400px; 
+    width: 6400px;
+}
+
+.game-container > .map > .tile-row {
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+}
+
+.game-container > .map > .tile-row > .tile {
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    width: 64px;
+    height: 64px;
+    display: table-cell;
+    background: url(images/terrains.png);
+}
+
+.game-container > .map > .tile-row > .tile.tile-grass {
+    background-position: 0px 0px;
+}
+
+.game-container > .map > .tile-row > .tile.tile-grass-land {
+    background-position: 192px 350px;
+}
+
+
+.game-container > .map > .tile-row > .tile > .tank {
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    width: 100%;
+    height: 100%;
+    background: url(images/attacker-tank.png);
+}
+
+.game-container > .map > .tile-row > .tile > .tank.down {
+    background-position: 0px 0px;
+}
+.game-container > .map > .tile-row > .tile > .tank.top {
+    background-position-x: 0px;
+    background-position-y: 64px;
+}
+
+.game-container > .map > .tile-row > .tile > .tank.right {
+    background-position-x: 0px;
+    background-position-y: 128px;
+}
+.game-container > .map > .tile-row > .tile > .tank.left {
+    background-position-x: 0px;
+    background-position-y: 192px;
+}
