@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'pd-Components',
+  selector: 'pd-components',
   template: `
     <p>
       components works!

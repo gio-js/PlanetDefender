@@ -17,10 +17,10 @@
       "dom"
     ],
     "paths": {
-      "Components": [
+      "components": [
         "dist/components"
       ],
-      "Components/*": [
+      "components/*": [
         "dist/components/*"
       ],
       "services": [

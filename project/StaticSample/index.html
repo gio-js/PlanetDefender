@@ -48,10 +48,28 @@
 
         <div class="map">
 
-            <!-- <div class="tile-row">
+            <div class="tile-row">
                 <div class="tile tile-grass">
-                    <div class="tank right">
-
+                    <div class="map-element-life-bar">
+                        <div class="map-element-life" style="width: 35px;"></div>
+                    </div>
+                    <div class="tank attacker right">
+                        <div class="map-attack-in-progress"></div>
+                        <div class="map-element-life"></div>
+                    </div>
+                </div>
+                <div class="tile tile-grass pulse">
+                    <div class="map-element-life-bar">
+                        <div class="map-element-life" style="width: 35px;"></div>
+                    </div>
+                    <div class="building"></div>
+                </div>
+                <div class="tile tile-grass ">
+                    <div class="map-element-life-bar">
+                        <div class="map-element-life" style="width: 35px;"></div>
+                    </div>
+                    <div class="tank defender right">
+                        <div class="map-element-life"></div>
                     </div>
                 </div>
                 <div class="tile tile-grass"></div>
@@ -61,9 +79,7 @@
                 <div class="tile tile-grass"></div>
                 <div class="tile tile-grass"></div>
                 <div class="tile tile-grass"></div>
-                <div class="tile tile-grass"></div>
-                <div class="tile tile-grass"></div>
-            </div> -->
+            </div>
 
         </div>
 
@@ -77,6 +93,9 @@
 
 
             const $container = $(".map");
+
+            if ($container.find("*").length > 0)
+                return;
 
             for (let i = 0; i < 100; i++) {
 

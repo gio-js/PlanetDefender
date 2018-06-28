@@ -144,7 +144,7 @@
         }
       }
     },
-    "Components": {
+    "components": {
       "root": "projects/components",
       "sourceRoot": "projects/components/src",
       "projectType": "library",

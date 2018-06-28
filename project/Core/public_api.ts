@@ -17,7 +17,8 @@ export * from './model/message/app.model.message.playerMessage';
 export * from './interfaces/app.core.model.mapElement';
 export * from './interfaces/app.core.model.mapMovableElement';
 export * from './interfaces/app.core.model.mapSelectableElement';
-export * from './interfaces/app.core.service.authentication';
+
+export * from './interfaces/client/app.core.interfaces.client.authentication';
 export * from './interfaces/client/app.core.interfaces.client.game';
 
 
