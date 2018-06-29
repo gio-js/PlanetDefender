@@ -1,6 +1,6 @@
 import { IMapElement } from "../../interfaces/app.core.model.mapElement";
 import { IMapSelectableElement } from "../../interfaces/app.core.model.mapSelectableElement";
-import { Point } from "./app.core.model.cache.point";
+import { Point } from "./app.core.model.game.point";
 import { MapElementDirection } from "../../enums/app.core.enum.mapElementDirection";
 import { TANKS_INITIAL_LIVES } from "../../consts/app.core.const.game";
 import { IMapMovableElement } from "../../interfaces/app.core.model.mapMovableElement";

@@ -1,0 +1,15 @@
+.game-container {
+    top: 54px;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: calc(100vh - 54px);
+    overflow: hidden;
+    position: absolute;
+    cursor: pointer;
+}
+
+.game-container > .map {
+    width: 6400px; 
+    width: 6400px;
+}

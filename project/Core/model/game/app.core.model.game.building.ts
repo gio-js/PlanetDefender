@@ -1,5 +1,5 @@
 import { IMapElement } from "../../interfaces/app.core.model.mapElement";
-import { Point } from "./app.core.model.cache.point";
+import { Point } from "./app.core.model.game.point";
 import { BUILDINGS_INITIAL_LIVES } from "../../consts/app.core.const.game";
 
 export class Building implements IMapElement {

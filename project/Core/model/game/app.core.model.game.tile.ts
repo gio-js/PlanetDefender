@@ -1,4 +1,4 @@
-import { Point } from "./app.core.model.cache.point";
+import { Point } from "./app.core.model.game.point";
 import { TerrainType } from "../../enums/app.core.enum.terrainType";
 import { IMapElement } from "../../interfaces/app.core.model.mapElement";
 

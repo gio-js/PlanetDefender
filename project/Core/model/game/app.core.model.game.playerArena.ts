@@ -1,6 +1,6 @@
 import { UserType } from "../../enums/app.core.enum.userType";
-import { Tank } from "./app.core.model.cache.tank";
-import { Building } from "./app.core.model.cache.building";
+import { Tank } from "./app.core.model.game.tank";
+import { Building } from "./app.core.model.game.building";
 
 
 export class ArenaPlayer {
