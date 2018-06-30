@@ -10,6 +10,12 @@
 }
 
 .game-container > .map {
-    width: 6400px; 
-    width: 6400px;
+    width: 3200px;
+    width: 3200px;
+}
+.game-container > .map > .tile-row {
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    height: 64px;;
 }

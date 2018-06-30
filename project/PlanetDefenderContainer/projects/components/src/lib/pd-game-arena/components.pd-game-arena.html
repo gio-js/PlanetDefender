@@ -2,8 +2,8 @@
 
   <div class="map">
 
-    <div class="tile-row" *ng-for="const tileRowIndex of NumberOfTiles">
-      <pd-tile *ng-for="const tileColumnIndex of NumberOfTiles"></pd-tile>
+    <div class="tile-row" *ngFor="let tileRowIndex of TilesArray">
+      <pd-tile *ngFor="let tileColumnIndex of TilesArray" [Tile]="getTileAt(tileRowIndex, tileColumnIndex)"></pd-tile>
     </div>
 
   </div>

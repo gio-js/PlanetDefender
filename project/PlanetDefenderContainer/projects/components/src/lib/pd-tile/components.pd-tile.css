@@ -1,0 +1,17 @@
+.tile {
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    width: 64px;
+    height: 64px;
+    display: table-cell;
+    background: url(../assets/images/terrains.png);
+}
+
+.tile.tile-grass {
+    background-position: 0px 0px;
+}
+
+.tile.tile-grass-land {
+    background-position: 192px 350px;
+}

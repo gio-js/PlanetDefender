@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng build services && ng build components && ng serve web",
+    "update-core": "cd batch && update-core.bat && npm uninstall planet-defender-core && npm i --save ..\\..\\Core-Compiled\\planet-defender-core-1.0.0.tgz",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

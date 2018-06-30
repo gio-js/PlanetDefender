@@ -12,6 +12,7 @@
             "element",
             "web",
             "kebab-case"
-        ]
+        ],
+        "quotemark": false
     }
 }

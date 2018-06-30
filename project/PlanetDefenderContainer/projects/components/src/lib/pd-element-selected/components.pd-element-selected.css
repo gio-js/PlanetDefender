@@ -1,0 +1,39 @@
+
+/**
+  * Map element selection
+  */
+.map-element-selected {
+    display: block;
+    cursor: pointer;
+    box-shadow: inset 0px 0px 0 4px rgba(209, 128, 21, 0.9);
+    animation: pulse 2s infinite;
+}
+.map-element-selected:hover {
+    animation: none;
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-box-shadow: inset 0 0 0 0px rgba(209, 128, 21, 0.9);
+    }
+    70% {
+        -webkit-box-shadow: inset 0 0 0 10px rgba(209, 128, 21, 0);
+    }
+    100% {
+        -webkit-box-shadow: inset 0 0 0 4px rgba(209, 128, 21, 0);
+    }
+}
+@keyframes pulse {
+    0% {
+        -moz-box-shadow: inset 0 0 0 0px rgba(209, 128, 21, 0.9);
+        box-shadow: inset 0 0 0 0px rgba(209, 128, 21, 0.9);
+    }
+    70% {
+        -moz-box-shadow: inset 0 0 0 10px rgba(209, 128, 21, 0);
+        box-shadow: inset 0 0 0 10px rgba(209, 128, 21, 0);
+    }
+    100% {
+        -moz-box-shadow: inset 0 0 0 4px rgba(209, 128, 21, 0);
+        box-shadow: inset 0 0 0 4px rgba(209, 128, 21, 0);
+    }
+}

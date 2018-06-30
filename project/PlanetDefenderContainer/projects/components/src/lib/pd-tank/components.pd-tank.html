@@ -1,0 +1,12 @@
+
+<pd-element-under-attack *ngIf="Tank.IsUnderAttack"></pd-element-under-attack>
+<pd-element-selected *ngIf="Tank.Selected"></pd-element-selected>
+<pd-life-bar [MapElementType]="MapElementTypeEnum.Tank" [Lives]="Tank.Lives"></pd-life-bar>
+<div class="tank" [ngClass]="{
+    'north': Tank.Direction == MapElementDirectionEnum.North,
+    'east': Tank.Direction == MapElementDirectionEnum.East,
+    'south': Tank.Direction == MapElementDirectionEnum.South,
+    'west': Tank.Direction == MapElementDirectionEnum.West,
+    'attacker': Tank.TankRoleType == TankRoleTypeEnum.Attacker,
+    'defender': Tank.TankRoleType == TankRoleTypeEnum.Defender
+}"></div>

@@ -1,5 +1,7 @@
-import { Point } from "../model/cache/app.core.model.cache.point";
+import { Point } from "../model/game/app.core.model.game.point";
+import { MapElementType } from "../enums/app.core.enum.mapElementType";
 
 export interface IMapElement {
-    Location: Point
+    ElementType: MapElementType;
+    Location: Point;
 }

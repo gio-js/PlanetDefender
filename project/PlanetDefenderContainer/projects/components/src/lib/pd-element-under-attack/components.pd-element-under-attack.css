@@ -1,0 +1,37 @@
+/**
+ * Attack sprites
+ */
+ .map-attack-in-progress {
+  display: block;
+  cursor: pointer;
+  animation: attack 2s infinite;
+  background: url(images/attack-sprites.png);
+  background-position-x: 0px;
+  background-position-y: 0px;
+  width: 64px;
+  height: 64px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+}
+
+/* @-webkit-keyframes attack {
+  0% {
+      -webkit-box-shadow: inset 0 0 0 0px rgba(209, 128, 21, 0.9);
+  }
+} */
+@keyframes attack {
+  0%, 6.9%   { opacity: 1; background-position: 192px 0px; }
+  7%, 13.9%  { background-position: 128px 0px; }
+  14%, 27.9% { background-position: 64px 0px; }
+  28%, 34.9% { background-position: 0px 64px; }
+  35%, 41.9% { background-position: 192px 64px; }
+  42%, 48.9% { background-position: 128px 64px; }
+  49%, 55.9% { background-position: 64px 64px; }
+  56%, 62.9%  { background-position: 0px 128px; }
+  63%, 69.9% { background-position: 192px 128px; }
+  70%, 75.9% { background-position: 128px 128px; }
+  76%, 99.9% { background-position: 64px 128px; }
+  100% { opacity: 0; }
+}

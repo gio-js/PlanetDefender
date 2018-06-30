@@ -1,0 +1,15 @@
+/**
+ * Lives
+ */
+.map-element-life-bar {
+    position: relative;
+    top: 4px;
+    margin: 0px 7px 0px 7px;
+    height: 3px;
+    background-color: lightcoral;
+}
+
+.map-element-life-bar > .map-element-life {
+    height: 3px;
+    background-color: lightgreen;
+}

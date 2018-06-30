@@ -1,6 +1,4 @@
-<div class="tile tile-grass">
-    <div class="map-element-life-bar">
-        <div class="map-element-life" style="width: 35px;"></div>
-    </div>
-    <div class="building"></div>
+<div class="tile tile-grass" [ngSwitch]="Tile.Element?.ElementType">
+    <pd-tank [Tank]="Tile?.Element" *ngSwitchCase="MapElementTypeEnum.Tank && Tile.Element != null"></pd-tank>
+    <pd-building [Building]="Tile?.Element" *ngSwitchCase="MapElementTypeEnum.Building  && Tile.Element != null"></pd-building>
 </div>

@@ -1,0 +1,35 @@
+/**
+ * Tanks
+ */
+.tank {
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+  width: 100%;
+  height: 100%;
+}
+
+.tank.attacker {
+  background: url(../assets/images/attacker-tank.png);
+}
+
+.tank.defender {
+  background: url(../assets/images/defender-tank.png);
+}
+
+.tank.south {
+  background-position: 0px 0px;
+}
+.tank.north {
+  background-position-x: 0px;
+  background-position-y: 64px;
+}
+
+.tank.east {
+  background-position-x: 0px;
+  background-position-y: 128px;
+}
+.tank.west {
+  background-position-x: 0px;
+  background-position-y: 192px;
+}

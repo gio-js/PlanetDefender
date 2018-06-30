@@ -1,6 +1,6 @@
-import { GameArena } from "../../model/cache/app.core.model.cache.gameArena";
-import { Tank } from "../../model/cache/app.core.model.cache.tank";
-import { Building } from "../../model/cache/app.core.model.cache.building";
+import { GameArena } from "../../model/game/app.core.model.game.gameArena";
+import { Tank } from "../../model/game/app.core.model.game.tank";
+import { Building } from "../../model/game/app.core.model.game.building";
 import { PlayerMessage } from "../../model/message/app.model.message.playerMessage";
 
 /**

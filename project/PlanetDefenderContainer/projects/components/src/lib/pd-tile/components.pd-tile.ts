@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Tile, MapElementType } from 'planet-defender-core';
 
 @Component({
   selector: 'pd-tile',
@@ -8,6 +9,11 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class PlanetDefenderTileComponent implements OnInit {
+
+  @Input()
+  Tile: Tile = null;
+
+  public MapElementTypeEnum = MapElementType;
 
   constructor() { }
 
