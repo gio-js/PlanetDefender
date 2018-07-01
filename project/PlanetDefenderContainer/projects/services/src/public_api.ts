@@ -3,4 +3,4 @@
  */
 
 export * from './lib/services.applicationService';
-export * from './lib/services.gameService';
+export * from './lib/services.gameHttpService';

@@ -5,7 +5,7 @@
   display: block;
   cursor: pointer;
   animation: attack 2s infinite;
-  background: url(images/attack-sprites.png);
+  background: url(../assets/images/attack-sprites.png);
   background-position-x: 0px;
   background-position-y: 0px;
   width: 64px;
@@ -13,7 +13,7 @@
   margin: 0;
   padding: 0;
   position: absolute;
-  top: 0;
+  /* top: 0; */
 }
 
 /* @-webkit-keyframes attack {

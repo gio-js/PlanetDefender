@@ -7,6 +7,9 @@
     cursor: pointer;
     box-shadow: inset 0px 0px 0 4px rgba(209, 128, 21, 0.9);
     animation: pulse 2s infinite;
+    width: 64px;
+    height: 66px;
+    position: absolute;
 }
 .map-element-selected:hover {
     animation: none;

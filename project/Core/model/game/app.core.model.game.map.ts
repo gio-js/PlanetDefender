@@ -12,8 +12,8 @@ export class Map {
     constructor(attacker: ArenaPlayer, defender: ArenaPlayer) {
         this.Tiles = {};
 
-        for(let x = 0; x < TILES_NUMBER; x++){
-            for(let y = 0; y < TILES_NUMBER; y++){
+        for(let y = 0; y < TILES_NUMBER; y++){
+            for(let x = 0; x < TILES_NUMBER; x++){
                 const tile = new Tile();
                 tile.Location = {
                         X: x,

@@ -16,4 +16,4 @@ export const TANKS_DELAY_FIRE_MS: number = 500;
 /**
  * Numer of tiles
  */
-export const TILES_NUMBER: number = 50;
+export const TILES_NUMBER: number = 20;

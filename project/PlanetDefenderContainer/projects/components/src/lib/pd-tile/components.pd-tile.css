@@ -4,8 +4,16 @@
     border: 0 none;
     width: 64px;
     height: 64px;
-    display: table-cell;
-    background: url(../assets/images/terrains.png);
+    display: -ms-inline-grid;
+    display: -webkit-inline-grid;
+    display: inline-grid;
+    /* background: url(../assets/images/terrains.png); */
+    box-shadow: 0 0 1px rgba(0,128,0,.5);
+    background-color: transparent;
+}
+
+.tile:hover {
+  background-color: hsla(0,0%,100%,.2);
 }
 
 .tile.tile-grass {

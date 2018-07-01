@@ -1,7 +1,7 @@
-import { Command } from "../../model/game/app.core.model.game.command";
+import { ICommandQueue } from './app.core.interfaces.client.commandsQueue';
 
 export interface ICommandExecutor {
 
-    Command: Command;
+    CommandsQueue: ICommandQueue;
 
 }

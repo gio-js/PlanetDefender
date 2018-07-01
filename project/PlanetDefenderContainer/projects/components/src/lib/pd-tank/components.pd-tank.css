@@ -1,12 +1,29 @@
 /**
  * Tanks
  */
+.tank-container {
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  -webkit-transition: left 1.5s ease-in, top 1.5s ease-in;
+  -moz-transition: left 1.5s ease-in, top 1.5s ease-in;
+  -o-transition: left 1.5s ease-in, top 1.5s ease-in;
+  transition: left 1.5s ease-in, top 1.5s ease-in;
+  animation-iteration-count: infinite;
+}
+
 .tank {
   margin: 0;
   padding: 0;
   border: 0 none;
   width: 100%;
   height: 100%;
+  left: 0px;
+  top: 0px;
 }
 
 .tank.attacker {
@@ -32,4 +49,35 @@
 .tank.west {
   background-position-x: 0px;
   background-position-y: 192px;
+}
+
+/**
+ * Tank movements
+ */
+.step-right {
+  left: 64px;
+  position: relative;
+  /* transition-property: left;
+  transition-duration: 1.5s; */
+}
+
+.step-left {
+  left: -64px;
+  position: relative;
+  transition-property: left;
+  transition-duration: 1.5s;
+}
+
+.step-top {
+  top: -64px;
+  position: relative;
+  transition-property: top;
+  transition-duration: 1.5s;
+}
+
+.step-bottom {
+  top: 64px;
+  position: relative;
+  transition-property: top;
+  transition-duration: 1.5s;
 }

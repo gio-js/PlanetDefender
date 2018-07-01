@@ -1,8 +1,13 @@
-
-<pd-element-under-attack *ngIf="Tank.IsUnderAttack"></pd-element-under-attack>
-<pd-element-selected *ngIf="Tank.Selected"></pd-element-selected>
-<pd-life-bar [MapElementType]="MapElementTypeEnum.Tank" [Lives]="Tank.Lives"></pd-life-bar>
-<div class="tank" [ngClass]="{
+<div class="tank-container" [ngClass]="{
+  'step-right': Tank.Moving && Tank.Direction == MapElementDirectionEnum.East,
+  'step-left': Tank.Moving && Tank.Direction == MapElementDirectionEnum.West,
+  'step-top': Tank.Moving && Tank.Direction == MapElementDirectionEnum.North,
+  'step-bottom': Tank.Moving && Tank.Direction == MapElementDirectionEnum.South
+}">
+  <pd-element-under-attack *ngIf="Tank.IsUnderAttack"></pd-element-under-attack>
+  <pd-element-selected *ngIf="Tank.Selected"></pd-element-selected>
+  <pd-life-bar [MapElementType]="MapElementTypeEnum.Tank" [Lives]="Tank.Lives"></pd-life-bar>
+  <div class="tank" [ngClass]="{
     'north': Tank.Direction == MapElementDirectionEnum.North,
     'east': Tank.Direction == MapElementDirectionEnum.East,
     'south': Tank.Direction == MapElementDirectionEnum.South,
@@ -10,3 +15,4 @@
     'attacker': Tank.TankRoleType == TankRoleTypeEnum.Attacker,
     'defender': Tank.TankRoleType == TankRoleTypeEnum.Defender
 }"></div>
+</div>

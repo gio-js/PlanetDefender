@@ -3,7 +3,7 @@
   <div class="map">
 
     <div class="tile-row" *ngFor="let tileRowIndex of TilesArray">
-      <pd-tile *ngFor="let tileColumnIndex of TilesArray" [Tile]="getTileAt(tileRowIndex, tileColumnIndex)"></pd-tile>
+      <pd-tile *ngFor="let tileColumnIndex of TilesArray" [Tile]="getTileAt(tileColumnIndex, tileRowIndex)"></pd-tile>
     </div>
 
   </div>

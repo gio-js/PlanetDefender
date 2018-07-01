@@ -1,21 +1,22 @@
 .game-container {
-    top: 54px;
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: calc(100vh - 54px);
-    overflow: hidden;
-    position: absolute;
-    cursor: pointer;
+  top: 54px;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: calc(100vh - 54px);
+  overflow: auto;
+  position: absolute;
+  cursor: pointer;
 }
 
 .game-container > .map {
-    width: 3200px;
-    width: 3200px;
+  width: 1280px;
+  width: 1280px;
+  background-color: #d1efb5;
 }
 .game-container > .map > .tile-row {
-    margin: 0;
-    padding: 0;
-    border: 0 none;
-    height: 64px;;
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+  height: 64px;
 }

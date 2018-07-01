@@ -18,6 +18,7 @@ export class Tank implements IMapElement, IMapSelectableElement, IMapMovableElem
     public IsUnderAttack: boolean;
     public Direction: MapElementDirection;
     public TankRoleType: TankRoleType;
+    public Moving: boolean;
 
     constructor() {
         this.Lives = TANKS_INITIAL_LIVES;

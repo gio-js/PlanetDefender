@@ -1,8 +1,6 @@
-import { TILES_NUMBER } from './../../consts/app.core.const.game';
 import { ArenaPlayer } from "./app.core.model.game.arenaPlayer";
 import { Map } from "./app.core.model.game.map";
-import { TerrainType } from '../../enums/app.core.enum.terrainType';
-import { Tile } from './app.core.model.game.tile';
+import { IMapElement } from "../../interfaces/app.core.model.mapElement";
 
 export class GameArena {
     public Uid: string;
@@ -11,4 +9,26 @@ export class GameArena {
     public Map: Map;
 
     constructor() { }
+
+    public getMapElementById(elementId: string) : IMapElement {
+        for(const el of this.Attacker.Tanks) {
+            if (el.Uid == elementId) {
+                return el;
+            }
+        }
+
+        for(const el of this.Defender.Tanks) {
+            if (el.Uid == elementId) {
+                return el;
+            }
+        }
+
+        for(const el of this.Defender.Buildings) {
+            if (el.Uid == elementId) {
+                return el;
+            }
+        }
+
+        return null;
+    }
 }

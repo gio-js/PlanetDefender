@@ -12,6 +12,7 @@
             "element",
             "pd",
             "kebab-case"
-        ]
+        ],
+        "quotemark": false
     }
 }
