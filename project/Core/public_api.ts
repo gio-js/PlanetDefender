@@ -1,4 +1,5 @@
 export * from './consts/app.core.const.game';
+export * from './consts/app.core.const.services';
 
 export * from './enums/app.core.enum.mapElementDirection';
 export * from './enums/app.core.enum.terrainType';
@@ -17,6 +18,7 @@ export * from './model/game/app.core.model.game.map';
 export * from './model/game/app.core.model.game.command';
 export * from './model/dal/app.model.dal.user';
 export * from './model/dal/app.model.dal.userSatistics';
+export * from './model/business/app.core.model.business.authenticationInfo';
 
 export * from './interfaces/app.core.model.mapElement';
 export * from './interfaces/app.core.model.mapMovableElement';

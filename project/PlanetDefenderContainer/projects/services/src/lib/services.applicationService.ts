@@ -39,5 +39,4 @@ export class ApplicationService {
     return this.commandService;
   }
 
-
 }
