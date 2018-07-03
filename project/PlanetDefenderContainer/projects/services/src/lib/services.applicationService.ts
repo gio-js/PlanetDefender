@@ -20,8 +20,8 @@ export class ApplicationService {
 
   constructor(private http: HttpClient) {
     this.httpService = new HttpService(http);
-    this.gameService = new GameHttpService(this.httpService);
     this.commandService = new CommandService(this);
+    this.gameService = new GameHttpService(this.httpService, this.commandService);
     this.authenticationService = new AuthenticationService(this.httpService);
   }
 
