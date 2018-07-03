@@ -10,11 +10,11 @@ export class HttpService {
   constructor(private http: HttpClient) { }
 
   public Post(method: string, body: any): Promise<any>  {
-    return this.http.post(`${PRIMARY_SERVICE_ENDPOINT}/${method}`, body).toPromise();
+    return this.http.post(`${PRIMARY_SERVICE_ENDPOINT}${method}`, body).toPromise();
   }
 
   public Get(method: string, queryString: string): Promise<any>  {
-    let url = `${PRIMARY_SERVICE_ENDPOINT}/${method}`;
+    let url = `${PRIMARY_SERVICE_ENDPOINT}${method}`;
     if (queryString) {
       url += "?" + queryString;
     }

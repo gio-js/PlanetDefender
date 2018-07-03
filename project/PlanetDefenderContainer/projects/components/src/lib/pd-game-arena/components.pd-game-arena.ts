@@ -24,4 +24,19 @@ export class PlanetDefenderGameArenaComponent implements OnInit {
       return this.GameArena.Map.getTileAt(x, y);
     }
 
+    public selectTileElement(tile: Tile) {
+      // tslint:disable-next-line:forin
+      for (const tilekey in this.GameArena.Map.Tiles) {
+        const tileMap: any = this.GameArena.Map.Tiles[tilekey];
+        if (tileMap.Element && 'Selected' in tileMap.Element) {
+          tileMap.Element.Selected = false;
+        }
+      }
+
+      const anyType: any = tile;
+      if (anyType.Element) {
+        anyType.Element.Selected = true;
+      }
+    }
+
 }

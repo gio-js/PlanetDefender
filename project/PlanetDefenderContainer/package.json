@@ -23,6 +23,7 @@
     "@angular/router": "^6.0.3",
     "angular2-uuid": "^1.1.1",
     "core-js": "^2.5.4",
+    "pathfinding": "^0.4.18",
     "planet-defender-core": "file:../Core-Compiled/planet-defender-core-1.0.0.tgz",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"

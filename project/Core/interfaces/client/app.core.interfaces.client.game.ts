@@ -8,13 +8,11 @@ import { Command } from "../../model/game/app.core.model.game.command";
  */
 export interface IGameService {
 
-    CreateArena(): Promise<GameArena>;
+    CreateArena(currentUserId: string): Promise<GameArena>;
 
-    SearchArena(): Promise<GameArena>;
+    JoinArena(arenaId: string): Promise<GameArena>;
 
-    JoinArena(channelId: string): Promise<GameArena>;
-
-    NotifyCommand(command: Command);
+    NotifyCommand(command: Command): Promise<any>;
 
     OnCommandAccepted(command: Command);
 

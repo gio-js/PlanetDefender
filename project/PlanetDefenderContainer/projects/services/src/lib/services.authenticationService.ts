@@ -1,23 +1,34 @@
 import { AuthenticationInfo, IAuthenticationService } from 'planet-defender-core';
 import { Injectable, Inject } from "@angular/core";
+import { HttpService } from './services.httpService';
 
 @Injectable()
 export class AuthenticationService implements IAuthenticationService {
 
   private authenticationInfo: AuthenticationInfo;
 
-  constructor(@Inject() private http: HttpService) { }
+  constructor(private http: HttpService) { }
 
   Register(email: string, password: string): Promise<AuthenticationInfo> {
-    this.http.Post("/users/register", {
+    return this.http.Post("/users/register", {
+      email: email,
+      password: password
+    }).then(info => {
+      this.authenticationInfo = info;
 
-    })
-    PRIMARY_SERVICE_ENDPOINT
-    throw new Error("Method not implemented.");
+      return info;
+    });
   }
 
-  Authenticate(email: string, password: string) {
-    throw new Error("Method not implemented.");
+  Authenticate(email: string, password: string): Promise<AuthenticationInfo> {
+    return this.http.Post("/authentication/login", {
+      email: email,
+      password: password
+    }).then(info => {
+      this.authenticationInfo = info;
+
+      return info;
+    });
   }
 
   public IsAuthenticated(): boolean {

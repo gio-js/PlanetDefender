@@ -17,7 +17,7 @@ export class AttackCommandExecutorService implements IAttackCommandExecutor {
 
   ExecuteAttack(relatedElementId: string, targetElementId: string): Promise<boolean> {
     const gameArena = this.applicationService.GetCurrentGameArena();
-    const el = gameArena.getMapElementById(relatedElementId);
+    const el = gameArena.GetMapElementById(relatedElementId);
 
     return new Promise((resolve, reject) => {
 
