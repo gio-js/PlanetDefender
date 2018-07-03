@@ -7,6 +7,7 @@ export * from './enums/app.core.enum.userType';
 export * from './enums/app.core.enum.mapElementType';
 export * from './enums/app.core.enum.commandType';
 export * from './enums/app.core.enum.tankRoleType';
+export * from './enums/app.core.enum.messageOutcomeType';
 
 export * from './model/game/app.core.model.game.point';
 export * from './model/game/app.core.model.game.tank';
@@ -32,6 +33,8 @@ export * from './interfaces/client/app.core.interfaces.client.moveCommandExecuto
 export * from './interfaces/client/app.core.interfaces.client.attackCommandExecutor';
 export * from './interfaces/client/app.core.interfaces.client.commandService';
 export * from './interfaces/client/app.core.interfaces.client.commandsQueue';
+
+export * from './factories/app.core.factory.gameArena';
 
 
 //export * from './model/app.core.model.userStatistics';

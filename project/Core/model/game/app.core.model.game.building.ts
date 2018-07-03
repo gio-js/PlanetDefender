@@ -10,6 +10,7 @@ export class Building implements IMapElement {
     public Location: Point;
     public IsUnderAttack: boolean;
     public Lives: number;
+    public OwnerUserId: string;
 
     constructor() {
         this.Lives = BUILDINGS_INITIAL_LIVES;

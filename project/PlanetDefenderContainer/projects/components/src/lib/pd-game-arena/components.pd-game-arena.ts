@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { GameArena, TILES_NUMBER, Tile } from 'planet-defender-core';
+import { ApplicationService } from 'services';
 
 @Component({
     selector: 'pd-game-arena',
@@ -10,32 +11,38 @@ import { GameArena, TILES_NUMBER, Tile } from 'planet-defender-core';
 })
 export class PlanetDefenderGameArenaComponent implements OnInit {
 
-    @Input()
-    public GameArena: GameArena = null;
-
     public TilesArray: Array<number> = Array.from(Array(TILES_NUMBER).keys());
 
-    constructor() { }
+    constructor(@Inject(ApplicationService)private applicationService: ApplicationService) { }
 
     ngOnInit() {
     }
 
     public getTileAt(x: number, y: number): Tile {
-      return this.GameArena.Map.getTileAt(x, y);
+      const gameArena = this.applicationService.GetCurrentGameArena();
+      return gameArena.Map.getTileAt(x, y);
     }
 
     public selectTileElement(tile: Tile) {
-      // tslint:disable-next-line:forin
-      for (const tilekey in this.GameArena.Map.Tiles) {
-        const tileMap: any = this.GameArena.Map.Tiles[tilekey];
-        if (tileMap.Element && 'Selected' in tileMap.Element) {
-          tileMap.Element.Selected = false;
-        }
+      const gameArena = this.applicationService.GetCurrentGameArena();
+      const authService = this.applicationService.GetAuthenticationService();
+      const currentUser = authService.GetAuthenticationInfo();
+      let selectionMade: boolean = false;
+      const anyType: any = tile;
+
+      if (currentUser.UserId === tile.Element.OwnerUserId && anyType.Element) {
+        anyType.Element.Selected = true;
+        selectionMade = true;
       }
 
-      const anyType: any = tile;
-      if (anyType.Element) {
-        anyType.Element.Selected = true;
+      if (selectionMade === true) {
+        // tslint:disable-next-line:forin
+        for (const tilekey in gameArena.Map.Tiles) {
+          const tileMap: any = gameArena.Map.Tiles[tilekey];
+          if (tileMap.Element && 'Selected' in tileMap.Element) {
+            tileMap.Element.Selected = false;
+          }
+        }
       }
     }
 

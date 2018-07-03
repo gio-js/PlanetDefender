@@ -12,4 +12,6 @@ export interface IAuthenticationService {
     IsAuthenticated(): boolean;
 
     GetAuthenticationInfo(): AuthenticationInfo;
+
+    SetAuthenticationInfo(auth: AuthenticationInfo);
 }

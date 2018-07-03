@@ -1,4 +1,4 @@
 <pd-login *ngIf="!isAuthenticated()"></pd-login>
 
 <pd-header *ngIf="isAuthenticated()"></pd-header>
-<pd-game-arena [GameArena]="GameArena" *ngIf="isAuthenticated() && GameArena !== null"></pd-game-arena>
+<pd-game-arena *ngIf="isAuthenticated() && getCurrentGameArena() !== null"></pd-game-arena>

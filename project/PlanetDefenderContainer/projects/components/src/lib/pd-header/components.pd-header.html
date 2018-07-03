@@ -12,10 +12,10 @@
                         <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="menu">
-                        <a class="dropdown-item" href="../default/">Nuova partita</a>
-                        <a class="dropdown-item" href="../cerulean/">Trova partita</a>
-                        <a class="dropdown-item" href="../cosmo/">Statistiche</a>
-                        <a class="dropdown-item" href="../cyborg/">Esci</a>
+                        <a class="dropdown-item" (click)="newGame()">Nuova partita</a>
+                        <a class="dropdown-item" (click)="joinGame()">Trova partita</a>
+                        <a class="dropdown-item" (click)="showStats()">Statistiche</a>
+                        <a class="dropdown-item" (click)="exitGame()">Esci</a>
                     </div>
                 </li>
             </ul>

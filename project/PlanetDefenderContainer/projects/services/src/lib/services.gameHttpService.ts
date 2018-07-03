@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import {
   IGameService, Building, GameArena, Tank, Command,
-  PRIMARY_SERVICE_ENDPOINT, WebSocketMessage, ICommandService } from "planet-defender-core";
+  PRIMARY_SERVICE_ENDPOINT, WebSocketMessage, ICommandService,
+  MessageOutcomeType,
+  UserStatistics} from "planet-defender-core";
 import { HttpService } from "./services.httpService";
 import { connect as socketIoConnect } from 'socket.io-client';
 import { Subject, Observable } from "rxjs";
-import { MessageOutcomeType } from "planet-defender-core/enums/app.core.enum.messageOutcomeType";
 
 @Injectable()
 export class GameHttpService implements IGameService {
@@ -75,11 +76,11 @@ export class GameHttpService implements IGameService {
       return this.webSocketObserver;
     }
 
-    JoinArena(arenaId: string): Promise<GameArena> {
-      return this.http.Get("/game/joinArena/" + arenaId, "").then(arena => {
+    JoinArena(): Promise<GameArena> {
+      return this.http.Get("/game/joinArena", "").then(arena => {
 
         // create web socket commands listener
-        this.createWebSocketListener(arenaId);
+        this.createWebSocketListener(arena.Uid);
         return arena;
 
       });
@@ -93,6 +94,10 @@ export class GameHttpService implements IGameService {
         return arena;
 
       });
+    }
+
+    GetStatistics(currentUserId: string): Promise<UserStatistics> {
+      return this.http.Get("/game/userStatistics/" + currentUserId, "");
     }
 
     SearchArena(): Promise<GameArena> {

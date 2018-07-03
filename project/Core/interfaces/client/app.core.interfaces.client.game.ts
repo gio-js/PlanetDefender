@@ -1,6 +1,5 @@
+import { UserStatistics } from './../../model/dal/app.model.dal.userSatistics';
 import { GameArena } from "../../model/game/app.core.model.game.gameArena";
-import { Tank } from "../../model/game/app.core.model.game.tank";
-import { Building } from "../../model/game/app.core.model.game.building";
 import { Command } from "../../model/game/app.core.model.game.command";
 
 /**
@@ -10,9 +9,11 @@ export interface IGameService {
 
     CreateArena(currentUserId: string): Promise<GameArena>;
 
-    JoinArena(arenaId: string): Promise<GameArena>;
+    JoinArena(): Promise<GameArena>;
 
     NotifyCommand(command: Command): Promise<any>;
+
+    GetStatistics(currentUserId: string): Promise<UserStatistics>;
 
     OnCommandAccepted(command: Command);
 

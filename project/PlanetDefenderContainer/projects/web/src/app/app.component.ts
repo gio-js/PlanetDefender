@@ -62,4 +62,8 @@ export class AppComponent implements OnInit {
     const authenticationService = this.applicationService.GetAuthenticationService();
     return authenticationService.IsAuthenticated();
   }
+
+  public getCurrentGameArena(): GameArena {
+    return this.applicationService.GetCurrentGameArena();
+  }
 }

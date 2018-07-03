@@ -39,4 +39,8 @@ export class AuthenticationService implements IAuthenticationService {
     return this.authenticationInfo;
   }
 
+  public SetAuthenticationInfo(auth: AuthenticationInfo) {
+    this.authenticationInfo = auth;
+  }
+
 }
