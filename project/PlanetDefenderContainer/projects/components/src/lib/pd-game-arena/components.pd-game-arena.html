@@ -6,7 +6,7 @@
       <pd-tile
         *ngFor="let tileColumnIndex of TilesArray"
         [Tile]="getTileAt(tileColumnIndex, tileRowIndex)"
-        (click)="selectTileElement(getTileAt(tileColumnIndex, tileRowIndex))"></pd-tile>
+        (click)="actOnTileElement(getTileAt(tileColumnIndex, tileRowIndex))"></pd-tile>
     </div>
 
   </div>

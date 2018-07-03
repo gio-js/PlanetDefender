@@ -14,7 +14,6 @@ export class Tank implements IMapElement, IMapSelectableElement, IMapMovableElem
     public ElementType: MapElementType = MapElementType.Tank;
     public Location: Point;
     public Lives: number;
-    public Selected: boolean;
     public IsUnderAttack: boolean;
     public Direction: MapElementDirection;
     public TankRoleType: TankRoleType;

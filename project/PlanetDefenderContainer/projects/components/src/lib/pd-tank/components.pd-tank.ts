@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Tank, MapElementType, TankRoleType, MapElementDirection } from 'planet-defender-core';
+import { ApplicationService } from 'services';
+import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Tank, MapElementType, TankRoleType, MapElementDirection, IMapElement } from 'planet-defender-core';
 
 @Component({
   selector: 'pd-tank',
@@ -17,9 +18,13 @@ export class PlanetDefenderTankComponent implements OnInit {
   public MapElementDirectionEnum = MapElementDirection;
   public TankRoleTypeEnum = TankRoleType;
 
-  constructor() { }
+  constructor(@Inject(ApplicationService)private applicationService: ApplicationService) { }
 
   ngOnInit() {
+  }
+
+  getSelectedElement(): IMapElement {
+    return this.applicationService.GetSelectedElement();
   }
 
 }

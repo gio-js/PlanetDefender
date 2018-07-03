@@ -25,9 +25,9 @@ export class AppComponent implements OnInit {
   public GameArena = new GameArena();
 
   constructor(@Inject(ApplicationService) private applicationService: ApplicationService) {
-    this.GameArena.Randomize('aaa');
+    this.GameArena.Randomize('5b395390c4c97f00142615ae');
     this.applicationService.SetCurrentGameArena(this.GameArena);
-    // const commandService = this.applicationService.GetCommandService();
+    const commandService = this.applicationService.GetCommandService();
     // const defTankAtt = this.GameArena.Attacker.Tanks[0];
     // const movementPoints = this.GameArena.Map.FindRoutePointsByElement(defTankAtt, {
     //   X: 3,
@@ -41,19 +41,21 @@ export class AppComponent implements OnInit {
     //   });
     // }
 
-    // const callback = () => {
-    //   const command = commandService.MoveCommandExecutor.CommandsQueue.Dequeue();
-    //   if (command) {
-    //     commandService.ExecuteAcceptedCommand(command).then(() => {
+    const callback = () => {
+      const command = commandService.MoveCommandExecutor.CommandsQueue.Dequeue();
+      if (command) {
+        commandService.ExecuteAcceptedCommand(command).then(() => {
 
-    //       setTimeout(callback, 100);
+          setTimeout(callback, 100);
 
-    //     });
-    //   }
+        });
+      } else {
+        setTimeout(callback, 100);
+      }
 
-    // };
+    };
 
-    // callback();
+    callback();
   }
 
   ngOnInit(): void {}

@@ -4,7 +4,7 @@ import { AttackCommandExecutorService } from './services.attackCommandExecutorSe
 import { Injectable } from "@angular/core";
 import {
   IAttackCommandExecutor, ICommandService, IMoveCommandExecutor,
-  Tank, Building, Command, CommandType, Point } from 'planet-defender-core';
+  Tank, Building, Command, CommandType, Point, IMapElement } from 'planet-defender-core';
 
 @Injectable()
 export class CommandService implements ICommandService {
@@ -19,7 +19,7 @@ export class CommandService implements ICommandService {
     this.AttackCommandExecutor = new AttackCommandExecutorService(applicationService);
   }
 
-  EnqueueAttackCommand(target: Tank | Building, attacker: Tank) {
+  EnqueueAttackCommand(target: IMapElement, attacker: IMapElement) {
     const command = this.AttackCommandExecutor.CommandsQueue.NextCommand(CommandType.Attack);
     command.RelatedElementId = attacker.Uid;
     command.TargetElementId = target.Uid;
@@ -27,7 +27,7 @@ export class CommandService implements ICommandService {
     this.AttackCommandExecutor.CommandsQueue.Enqueue(command);
   }
 
-  EnqueueMoveCommands(target: Tank | Building, destinationPoint: Point) {
+  EnqueueMoveCommands(target: IMapElement, destinationPoint: Point) {
     const command = this.MoveCommandExecutor.CommandsQueue.NextCommand(CommandType.Move);
     command.RelatedElementId = target.Uid;
     command.TargetElementId = null;

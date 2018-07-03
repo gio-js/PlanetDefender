@@ -23,9 +23,11 @@ export class GameArena {
     constructor() { }
 
     public GetMapElementById(elementId: string) : IMapElement {
-        for(const el of this.Attacker.Tanks) {
-            if (el.Uid == elementId) {
-                return el;
+        if (this.Attacker) {
+            for(const el of this.Attacker.Tanks) {
+                if (el.Uid == elementId) {
+                    return el;
+                }
             }
         }
 
@@ -95,6 +97,7 @@ export class GameArena {
                         Y: parseInt((index / TILES_NUMBER).toString())
                     };
                     baseBuilding.Uid = uuidv1();
+                    baseBuilding.OwnerUserId = ownerUserId;
                     defender.Buildings.push(baseBuilding);
                     break;
                 case MapElementType.Tank:
@@ -108,6 +111,7 @@ export class GameArena {
                     };
                     defTank.Lives = TANKS_INITIAL_LIVES;
                     defTank.Uid = uuidv1();
+                    defTank.OwnerUserId = ownerUserId;
                     defender.Tanks.push(defTank);
                     break;
             }

@@ -5,6 +5,7 @@ import { TerrainType } from "../../enums/app.core.enum.terrainType";
 import { IMapMovableElement } from "../../interfaces/app.core.model.mapMovableElement";
 import { Point } from "./app.core.model.game.point";
 import PathFind from 'pathfinding';
+import { IMapElement } from "../../interfaces/app.core.model.mapElement";
 
 export class Map {
 
@@ -79,14 +80,14 @@ export class Map {
     /**
      * Retrieve the best route path from one location to another (by reference element as source)
      */
-    public FindRoutePointsByElement(relatedElement: IMapMovableElement, destinationPoint: Point): Array<Point> {
+    public FindRoutePointsByElement(relatedElement: IMapElement, destinationPoint: Point): Array<Point> {
         return this.FindRoutePoints(relatedElement.Location, destinationPoint);
     }
 
     /**
      * Retrieve the best route path from one location to another (by reference element as source)
      */
-    public FindRouteForAttack(relatedElement: IMapMovableElement, destinationElement: Point): Array<Point> {
+    public FindRouteForAttack(relatedElement: IMapElement, destinationElement: Point): Array<Point> {
         const 
             westPoint = { X: destinationElement.X - 1, Y: destinationElement.Y },
             eastPoint = { X: destinationElement.X + 1, Y: destinationElement.Y },

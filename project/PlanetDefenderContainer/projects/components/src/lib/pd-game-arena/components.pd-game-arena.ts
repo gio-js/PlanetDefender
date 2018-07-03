@@ -23,24 +23,43 @@ export class PlanetDefenderGameArenaComponent implements OnInit {
       return gameArena.Map.getTileAt(x, y);
     }
 
-    public selectTileElement(tile: Tile) {
-      const gameArena = this.applicationService.GetCurrentGameArena();
+    public actOnTileElement(tile: Tile) {
       const authService = this.applicationService.GetAuthenticationService();
       const currentUser = authService.GetAuthenticationInfo();
-      let selectionMade: boolean = false;
-      const anyType: any = tile;
+      const gameArea = this.applicationService.GetCurrentGameArena();
+      const currentSelectedElement = this.applicationService.GetSelectedElement();
+      const commandService = this.applicationService.GetCommandService();
 
-      if (tile.Element && currentUser.UserId === tile.Element.OwnerUserId) {
-        anyType.Element.Selected = true;
-        selectionMade = true;
-      }
+      if (tile.Element) { // select or attack
 
-      if (selectionMade === true) {
-        // tslint:disable-next-line:forin
-        for (const tilekey in gameArena.Map.Tiles) {
-          const tileMap: any = gameArena.Map.Tiles[tilekey];
-          if (tileMap.Element && 'Selected' in tileMap.Element) {
-            tileMap.Element.Selected = false;
+        // selection
+        if (currentUser.UserId === tile.Element.OwnerUserId) {
+          this.applicationService.SetSelectedElement(tile.Element);
+
+        } else { // attack (only if there is a selected element)
+          if (currentSelectedElement) {
+            const attackMovements = gameArea.Map.FindRouteForAttack(currentSelectedElement, tile.Location);
+
+            for (const point of attackMovements) {
+              commandService.EnqueueMoveCommands(currentSelectedElement, {
+                X: point.X,
+                Y: point.Y
+              });
+            }
+
+            commandService.EnqueueAttackCommand(tile.Element, currentSelectedElement);
+
+          }
+        }
+      } else { // move, only if there is a selected element
+        if (currentSelectedElement) {
+          const movementsPoints = gameArea.Map.FindRoutePointsByElement(currentSelectedElement, tile.Location);
+
+          for (const point of movementsPoints) {
+            commandService.EnqueueMoveCommands(currentSelectedElement, {
+              X: point.X,
+              Y: point.Y
+            });
           }
         }
       }

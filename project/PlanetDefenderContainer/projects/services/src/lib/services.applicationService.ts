@@ -2,7 +2,7 @@ import { CommandService } from './services.commandService';
 import { GameArena, ICommandService, IAuthenticationService } from 'planet-defender-core';
 import { UiService } from './services.uiServices';
 import { Injectable } from '@angular/core';
-import { IGameService } from 'planet-defender-core';
+import { IGameService, IMapElement } from 'planet-defender-core';
 import { GameHttpService } from './services.gameHttpService';
 import { HttpClient } from '@angular/common/http';
 import { HttpService } from './services.httpService';
@@ -17,6 +17,7 @@ export class ApplicationService {
   private commandService: ICommandService;
   private authenticationService: IAuthenticationService;
   private httpService: HttpService;
+  private selectedElement: IMapElement;
 
   constructor(private http: HttpClient) {
     this.httpService = new HttpService(http);
@@ -48,6 +49,14 @@ export class ApplicationService {
 
   public GetAuthenticationService(): IAuthenticationService {
     return this.authenticationService;
+  }
+
+  public GetSelectedElement(): IMapElement {
+    return this.selectedElement;
+  }
+
+  public SetSelectedElement(element) {
+    this.selectedElement = element;
   }
 
 }
