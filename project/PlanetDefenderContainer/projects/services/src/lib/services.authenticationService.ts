@@ -25,7 +25,7 @@ export class AuthenticationService implements IAuthenticationService {
       email: email,
       password: password
     }).then(info => {
-      this.authenticationInfo = info;
+      this.SetAuthenticationInfo(info);
 
       return info;
     });
@@ -41,6 +41,7 @@ export class AuthenticationService implements IAuthenticationService {
 
   public SetAuthenticationInfo(auth: AuthenticationInfo) {
     this.authenticationInfo = auth;
+    this.http.SetAuthenticationInfo(auth);
   }
 
 }

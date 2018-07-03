@@ -30,7 +30,7 @@ export class PlanetDefenderGameArenaComponent implements OnInit {
       let selectionMade: boolean = false;
       const anyType: any = tile;
 
-      if (currentUser.UserId === tile.Element.OwnerUserId && anyType.Element) {
+      if (tile.Element && currentUser.UserId === tile.Element.OwnerUserId) {
         anyType.Element.Selected = true;
         selectionMade = true;
       }

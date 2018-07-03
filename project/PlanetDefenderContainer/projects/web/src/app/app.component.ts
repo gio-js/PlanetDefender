@@ -25,35 +25,35 @@ export class AppComponent implements OnInit {
   public GameArena = new GameArena();
 
   constructor(@Inject(ApplicationService) private applicationService: ApplicationService) {
-    this.GameArena.Randomize();
+    this.GameArena.Randomize('aaa');
     this.applicationService.SetCurrentGameArena(this.GameArena);
-    const commandService = this.applicationService.GetCommandService();
-    const defTankAtt = this.GameArena.Attacker.Tanks[0];
-    const movementPoints = this.GameArena.Map.FindRoutePointsByElement(defTankAtt, {
-      X: 3,
-      Y: 3
-    });
+    // const commandService = this.applicationService.GetCommandService();
+    // const defTankAtt = this.GameArena.Attacker.Tanks[0];
+    // const movementPoints = this.GameArena.Map.FindRoutePointsByElement(defTankAtt, {
+    //   X: 3,
+    //   Y: 3
+    // });
 
-    for (const point of movementPoints) {
-      commandService.EnqueueMoveCommands(defTankAtt, {
-        X: point.X,
-        Y: point.Y
-      });
-    }
+    // for (const point of movementPoints) {
+    //   commandService.EnqueueMoveCommands(defTankAtt, {
+    //     X: point.X,
+    //     Y: point.Y
+    //   });
+    // }
 
-    const callback = () => {
-      const command = commandService.MoveCommandExecutor.CommandsQueue.Dequeue();
-      if (command) {
-        commandService.ExecuteAcceptedCommand(command).then(() => {
+    // const callback = () => {
+    //   const command = commandService.MoveCommandExecutor.CommandsQueue.Dequeue();
+    //   if (command) {
+    //     commandService.ExecuteAcceptedCommand(command).then(() => {
 
-          setTimeout(callback, 100);
+    //       setTimeout(callback, 100);
 
-        });
-      }
+    //     });
+    //   }
 
-    };
+    // };
 
-    callback();
+    // callback();
   }
 
   ngOnInit(): void {}

@@ -21,7 +21,13 @@ export class Map {
                         Y: y
                     };
                 tile.TerrainType = TerrainType.Grass,
-                tile.Element = attacker.getElementAt(x, y) || defender.getElementAt(x, y) || null;
+                tile.Element = (() => {
+                    return (
+                        (attacker ? attacker.getElementAt(x, y) : null) || 
+                        defender.getElementAt(x, y) || 
+                        null
+                    );
+                })(),
                 this.Tiles[`${x}_${y}`] = tile;
             }
         }

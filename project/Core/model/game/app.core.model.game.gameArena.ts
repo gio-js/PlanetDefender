@@ -1,3 +1,7 @@
+import { 
+    BUILDINGS_INITIAL_LIVES, BUILDINGS_INITIAL_COUNT, 
+    TANKS_INITIAL_LIVES,
+    TANKS_INITIAL_COUNT, TILES_NUMBER } from '../../consts/app.core.const.game';
 import { ArenaPlayer } from "./app.core.model.game.arenaPlayer";
 import { Map } from "./app.core.model.game.map";
 import { IMapElement } from "../../interfaces/app.core.model.mapElement";
@@ -7,6 +11,8 @@ import { Building } from "./app.core.model.game.building";
 import { Tank } from "./app.core.model.game.tank";
 import { MapElementDirection } from "../../enums/app.core.enum.mapElementDirection";
 import { TankRoleType } from "../../enums/app.core.enum.tankRoleType";
+import shuffle from 'shuffle-array';
+import uuidv1 from 'uuid/v1';
 
 export class GameArena {
     public Uid: string;
@@ -41,71 +47,74 @@ export class GameArena {
     /**
      * Randomize the game arena content
      */
-    public Randomize() {
+    public Randomize(ownerUserId: string) {
         const defender = new ArenaPlayer();
-        defender.Email = "c@d.it";
+        defender.UserId = ownerUserId;
         defender.UserType = UserType.Defender;
         defender.Tanks = [];
         defender.Buildings = [];
     
-        const baseBuilding = new Building();
-        baseBuilding.ElementType = MapElementType.Building;
-        baseBuilding.IsUnderAttack = true;
-        baseBuilding.Lives = 2;
-        baseBuilding.Location = {
-          X: 6,
-          Y: 5
-        };
-        defender.Buildings.push(baseBuilding);
-    
-        const defTank = new Tank();
-        defTank.Direction = MapElementDirection.East;
-        defTank.ElementType = MapElementType.Tank;
-        defTank.TankRoleType = TankRoleType.Defender;
-        defTank.Location = {
-          X: 0,
-          Y: 0
-        };
-        defTank.Lives = 3;
-        defTank.Uid = "aaaa";
-    
-        const defTankSel = new Tank();
-        defTankSel.Direction = MapElementDirection.North;
-        defTankSel.Selected = true;
-        defTankSel.ElementType = MapElementType.Tank;
-        defTankSel.TankRoleType = TankRoleType.Defender;
-        defTankSel.Location = {
-          X: 1,
-          Y: 1
-        };
-        defTankSel.Lives = 3;
-        defTankSel.Uid = "bbbb";
-    
-        const defTankAtt = new Tank();
-        defTankAtt.Direction = MapElementDirection.West;
-        defTankAtt.IsUnderAttack = true;
-        defTankAtt.ElementType = MapElementType.Tank;
-        defTankAtt.TankRoleType = TankRoleType.Attacker;
-        defTankAtt.Location = {
-          X: 12,
-          Y: 6
-        };
-        defTankAtt.Lives = 3;
-        defTankAtt.Uid = "bbbb";
-    
-        defender.Tanks = [defTank, defTankSel];
-    
+        // const baseBuilding = new Building();
+        // baseBuilding.ElementType = MapElementType.Building;
+        // baseBuilding.IsUnderAttack = true;
+        // baseBuilding.Lives = 2;
+        // baseBuilding.Location = {
+        //   X: 6,
+        //   Y: 5
+        // };
+        // defender.Buildings.push(baseBuilding);
+
+        const numberOfTiles = TILES_NUMBER * TILES_NUMBER;
+        const tilesIndexes = [];
+        let buildingsCount = BUILDINGS_INITIAL_COUNT, tanksCount = TANKS_INITIAL_COUNT;
+        for(let index = 0; index < numberOfTiles; index++) {
+            if (buildingsCount > 0) {
+                tilesIndexes[index] = parseInt(MapElementType.Building.toString());
+                buildingsCount--;
+            } else if (tanksCount > 0) {
+                tilesIndexes[index] = parseInt(MapElementType.Tank.toString());
+                tanksCount--;
+            } else {
+                tilesIndexes[index] = -1;
+            }
+        }
+
+        shuffle(tilesIndexes);
+
+        // create buildings and tanks
+        for(let index = 0; index < tilesIndexes.length; index++) {
+            let tileValue = tilesIndexes[index];
+            switch(tileValue) {
+                case MapElementType.Building:
+                    const baseBuilding = new Building();
+                    baseBuilding.ElementType = MapElementType.Building;
+                    baseBuilding.IsUnderAttack = false;
+                    baseBuilding.Lives = BUILDINGS_INITIAL_LIVES;
+                    baseBuilding.Location = {
+                        X: index % TILES_NUMBER,
+                        Y: parseInt((index / TILES_NUMBER).toString())
+                    };
+                    baseBuilding.Uid = uuidv1();
+                    defender.Buildings.push(baseBuilding);
+                    break;
+                case MapElementType.Tank:
+                    const defTank = new Tank();
+                    defTank.Direction = MapElementDirection.South;
+                    defTank.ElementType = MapElementType.Tank;
+                    defTank.TankRoleType = TankRoleType.Defender;
+                    defTank.Location = {
+                        X: index % TILES_NUMBER,
+                        Y: parseInt((index / TILES_NUMBER).toString())
+                    };
+                    defTank.Lives = TANKS_INITIAL_LIVES;
+                    defTank.Uid = uuidv1();
+                    defender.Tanks.push(defTank);
+                    break;
+            }
+        }
+
         this.Defender = defender;
-    
-        const attacker = new ArenaPlayer();
-        attacker.Email = "c@d.it";
-        attacker.UserType = UserType.Attacker;
-        attacker.Buildings = [];
-        attacker.Tanks = [defTankAtt];
-    
-        this.Attacker = attacker;
-    
-        this.Uid = "uid";
-        this.Map = new Map(attacker, defender);
+        this.Uid = uuidv1();
+        this.Map = new Map(null, defender);
     }
 }

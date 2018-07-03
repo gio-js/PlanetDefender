@@ -1,96 +1,99 @@
 <div class="container">
-    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" *ngIf="!isRegister">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <div class="panel-title">Planet Defender - Login</div>
-            </div>
+  <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" *ngIf="!isRegister">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="panel-title">Planet Defender - Login</div>
+      </div>
 
-            <div style="padding-top:30px" class="panel-body">
+      <div style="padding-top:30px" class="panel-body">
 
-                <div *ngIf="errorMessage" id="login-alert" class="alert alert-danger col-sm-12"> {{ errorMessage }}</div>
+        <div *ngIf="errorMessage" id="login-alert" class="alert alert-danger col-sm-12"> {{ errorMessage }}</div>
 
-                <form id="loginform" class="form-horizontal" role="form">
+        <form id="loginform" class="form-horizontal" role="form">
 
-                    <div style="margin-bottom: 25px" class="input-group">
-                        <span class="input-group-addon">
-                            <i class="glyphicon glyphicon-user"></i>
-                        </span>
-                        <input [(ngModel)]="userName" id="login-username" type="email" class="form-control" name="username" value="" placeholder="username or email">
-                    </div>
+          <div style="margin-bottom: 25px" class="input-group">
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-user"></i>
+            </span>
+            <input [(ngModel)]="userName" id="login-username" type="email" class="form-control" name="username" value="" placeholder="username or email">
+          </div>
 
-                    <div style="margin-bottom: 25px">
-                        <input id="login-password" [(ngModel)]="password" type="password" class="form-control" name="password" placeholder="password">
-                    </div>
+          <div style="margin-bottom: 25px">
+            <input id="login-password" [(ngModel)]="password" type="password" class="form-control" name="password" placeholder="password">
+          </div>
 
-                    <div style="margin-top:10px">
-                        <div class="col-sm-12 controls">
-                            <a id="btn-login" href="#" class="btn btn-success" (click)="login()">Login </a>
-
-                        </div>
-                    </div>
-
-
-                    <div class="form-group" style="margin-top:10px">
-                        <div class="col-md-12 control">
-                            <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
-                                Non hai un account!
-                                <a href="#" (click)="showLogin()">
-                                    Registrati
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-
+          <div style="margin-top:10px">
+            <div class="col-sm-12 controls">
+              <a id="btn-login" href="#" class="btn btn-success" (click)="login()">Login </a>
 
             </div>
-        </div>
+          </div>
+
+
+          <div class="form-group" style="margin-top:10px">
+            <div class="col-md-12 control">
+              <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                Non hai un account?
+                <a href="#" (click)="showRegister()">
+                  Registrati
+                </a>
+              </div>
+            </div>
+          </div>
+        </form>
+
+
+
+      </div>
     </div>
-    <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" *ngIf="isRegister">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <div class="panel-title">Sign Up</div>
-                <div style="float:right; font-size: 85%; position: relative; top:-10px">
-                    <a id="signinlink" href="#" (click)="showRegister()">Sign In</a>
-                </div>
+  </div>
+
+  <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" *ngIf="isRegister">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="panel-title">Planet Defender - Registrazione</div>
+      </div>
+
+      <div style="padding-top:30px" class="panel-body">
+
+        <div *ngIf="errorMessage" id="login-alert" class="alert alert-danger col-sm-12"> {{ errorMessage }}</div>
+
+        <form id="loginform" class="form-horizontal" role="form">
+
+          <div style="margin-bottom: 25px" class="input-group">
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-user"></i>
+            </span>
+            <input [(ngModel)]="userName" id="login-username" type="email" class="form-control" name="username" value="" placeholder="username or email">
+          </div>
+
+          <div style="margin-bottom: 25px">
+            <input id="login-password" [(ngModel)]="password" type="password" class="form-control" name="password" placeholder="password">
+          </div>
+
+          <div style="margin-top:10px">
+            <div class="col-sm-12 controls">
+              <a id="btn-login" href="#" class="btn btn-success" (click)="register()">Login </a>
+
             </div>
-            <div class="panel-body">
-                <form id="signupform" class="form-horizontal" role="form">
-
-                    <div id="signupalert" class="alert alert-danger" *ngIf="errorMessage">
-                        <p>Error:</p>
-                        <span>{{errorMessage}}</span>
-                    </div>
+          </div>
 
 
-
-                    <div class="form-group">
-                        <label for="email" class="col-md-3 control-label">Email</label>
-                        <div class="col-md-9">
-                            <input type="email" [(ngModel)]="userName" class="form-control" name="email" placeholder="Email Address">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password" class="col-md-3 control-label">Password</label>
-                        <div class="col-md-9">
-                            <input type="password" [(ngModel)]="password" class="form-control" name="passwd" placeholder="Password">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <!-- Button -->
-                        <div class="col-md-offset-3 col-md-9">
-                            <button id="btn-signup" type="button" class="btn btn-info">
-                                <i class="icon-hand-right"  (click)="register()"></i> &nbsp Registrati</button>
-                            <span style="margin-left:8px;">or</span>
-                        </div>
-                    </div>
-
-                </form>
+          <div class="form-group" style="margin-top:10px">
+            <div class="col-md-12 control">
+              <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                Hai già un account?
+                <a href="#" (click)="showLogin()">
+                  Login
+                </a>
+              </div>
             </div>
-        </div>
+          </div>
+        </form>
 
+
+
+      </div>
     </div>
+  </div>
 </div>

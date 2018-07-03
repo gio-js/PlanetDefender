@@ -1,7 +1,7 @@
 import { GameArena } from '../model/game/app.core.model.game.gameArena';
 import { ArenaPlayer } from '../model/game/app.core.model.game.arenaPlayer';
 import { Tile } from '../model/game/app.core.model.game.tile';
-import { Map } from 'model/game/app.core.model.game.map';
+import { Map } from '../model/game/app.core.model.game.map';
 
 export const GameArenaFactory = {
 

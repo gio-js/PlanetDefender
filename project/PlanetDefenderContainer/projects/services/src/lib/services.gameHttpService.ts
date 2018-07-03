@@ -5,7 +5,7 @@ import {
   MessageOutcomeType,
   UserStatistics} from "planet-defender-core";
 import { HttpService } from "./services.httpService";
-import { connect as socketIoConnect } from 'socket.io-client';
+import * as socketIOClient from 'socket.io-client';
 import { Subject, Observable } from "rxjs";
 
 @Injectable()
@@ -37,7 +37,7 @@ export class GameHttpService implements IGameService {
         this.webSocketObserver = null;
       }
 
-      this.socket = socketIoConnect(PRIMARY_SERVICE_ENDPOINT);
+      this.socket = socketIOClient.connect(PRIMARY_SERVICE_ENDPOINT);
 
       // observable creation
       const observable = new Observable(observer => {
