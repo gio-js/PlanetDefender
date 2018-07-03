@@ -1,6 +1,7 @@
+import { ApplicationService } from 'services';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
 
 import { PlanetDefenderHeaderComponent } from './pd-header/components.pd-header';
 import { PlanetDefenderLoginComponent } from './pd-login/components.pd-login';
@@ -14,7 +15,8 @@ import { PlanetDefenderElementSelectedComponent } from './pd-element-selected/co
 
 @NgModule({
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   declarations: [
     PlanetDefenderHeaderComponent,
@@ -39,6 +41,9 @@ import { PlanetDefenderElementSelectedComponent } from './pd-element-selected/co
     PlanetDefenderLifeBarComponent,
     PlanetDefenderElementUnderAttackComponent,
     PlanetDefenderElementSelectedComponent
+  ],
+  providers: [
+    ApplicationService
   ]
 })
 export class ComponentsModule { }

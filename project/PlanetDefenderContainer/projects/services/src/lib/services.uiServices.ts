@@ -14,7 +14,7 @@ export class UiService {
      * Moves the tank for a single tile for the specified direction
      */
     MoveTankNextStep(relatedElementId: string, direction: MapElementDirection): Promise<any> {
-        const tank = this.gameArena.getMapElementById(relatedElementId) as IMapMovableElement;
+        const tank = this.gameArena.GetMapElementById(relatedElementId) as IMapMovableElement;
 
         tank.Direction = direction;
         tank.Moving = true;

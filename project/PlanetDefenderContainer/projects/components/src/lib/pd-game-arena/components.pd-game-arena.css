@@ -13,6 +13,7 @@
   width: 1280px;
   width: 1280px;
   background-color: #d1efb5;
+  margin: 0 auto;
 }
 .game-container > .map > .tile-row {
   margin: 0;

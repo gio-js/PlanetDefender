@@ -21,7 +21,7 @@ export class MoveCommandExecutorService implements IMoveCommandExecutor {
     const moveDirection = this.retriveMoveDirection(relatedElementId, destinationPoint);
     return uiService.MoveTankNextStep(relatedElementId, moveDirection).then(() => {
       const gameArena = this.applicationService.GetCurrentGameArena();
-      const el = gameArena.getMapElementById(relatedElementId);
+      const el = gameArena.GetMapElementById(relatedElementId);
       const tileSource = gameArena.Map.getTileAt(el.Location.X, el.Location.Y);
       const tileTarget = gameArena.Map.getTileAt(destinationPoint.X, destinationPoint.Y);
 
@@ -36,7 +36,7 @@ export class MoveCommandExecutorService implements IMoveCommandExecutor {
 
   private retriveMoveDirection(relatedElementId: string, destinationPoint: Point): MapElementDirection {
     const gameArena = this.applicationService.GetCurrentGameArena();
-    const el = gameArena.getMapElementById(relatedElementId);
+    const el = gameArena.GetMapElementById(relatedElementId);
 
     if (destinationPoint.X === (el.Location.X + 1)) {
       return MapElementDirection.East;

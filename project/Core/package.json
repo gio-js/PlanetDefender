@@ -10,6 +10,15 @@
         "@angular/compiler-cli": "^6.0.5",
         "@angular/core": "^6.0.5",
         "ng-packagr": "^3.0.3",
-        "typescript": "~2.7.2"
+        "typescript": "~2.7.2",
+        "pathfinding": "^0.4.18"
+    },
+    "devDependencies": {
+        "ng-packagr": "^3.0.3",
+        "@angular/compiler": "^6.0.5",
+        "@angular/compiler-cli": "^6.0.5",
+        "@angular/core": "^6.0.5",
+        "typescript": "~2.7.2",
+        "pathfinding": "^0.4.18"
     }
 }
