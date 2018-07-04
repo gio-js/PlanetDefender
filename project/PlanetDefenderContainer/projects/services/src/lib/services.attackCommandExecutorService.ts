@@ -9,11 +9,13 @@ import { CommandsQueue } from './services.commandsQueue';
 @Injectable()
 export class AttackCommandExecutorService implements IAttackCommandExecutor {
 
-  constructor(private applicationService: ApplicationService) {
+  constructor(relatedElementId: string, private applicationService: ApplicationService) {
+    this.RelatedElementId = relatedElementId;
     this.CommandsQueue = new CommandsQueue();
   }
 
   public CommandsQueue: ICommandQueue;
+  public RelatedElementId: string;
 
   ExecuteAttack(relatedElementId: string, targetElementId: string): Promise<boolean> {
     const gameArena = this.applicationService.GetCurrentGameArena();

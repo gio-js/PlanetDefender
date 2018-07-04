@@ -11,51 +11,75 @@ export class CommandService implements ICommandService {
 
   private readonly INTERVAL_COMMANDS_EXECUTION_MS: number = 100;
 
-  MoveCommandExecutor: IMoveCommandExecutor;
-  AttackCommandExecutor: IAttackCommandExecutor;
+  MoveCommandsExecutor: Array<IMoveCommandExecutor>;
+  AttackCommandsExecutor: Array<IAttackCommandExecutor>;
 
   constructor(private applicationService: ApplicationService) {
-    this.MoveCommandExecutor = new MoveCommandExecutorService(applicationService);
-    this.AttackCommandExecutor = new AttackCommandExecutorService(applicationService);
+    this.MoveCommandsExecutor = []; //new MoveCommandExecutorService(applicationService);
+    this.AttackCommandsExecutor = []; // new AttackCommandExecutorService(applicationService);
+  }
+
+  private getMoveExecutor(elementId: string) {
+    return this.MoveCommandsExecutor.find(m => m.RelatedElementId === elementId);
+  }
+
+  private getAttackExecutor(elementId: string) {
+    return this.AttackCommandsExecutor.find(m => m.RelatedElementId === elementId);
   }
 
   EnqueueAttackCommand(target: IMapElement, attacker: IMapElement) {
-    const command = this.AttackCommandExecutor.CommandsQueue.NextCommand(CommandType.Attack);
+    let executor = this.getAttackExecutor(attacker.Uid);
+    if (!executor) {
+      executor = new AttackCommandExecutorService(attacker.Uid, this.applicationService);
+      this.AttackCommandsExecutor.push(executor);
+    }
+
+    const command = executor.CommandsQueue.NextCommand(CommandType.Attack);
     command.RelatedElementId = attacker.Uid;
     command.TargetElementId = target.Uid;
     command.TargetLocation = null;
-    this.AttackCommandExecutor.CommandsQueue.Enqueue(command);
+    executor.CommandsQueue.Enqueue(command);
   }
 
   EnqueueMoveCommands(target: IMapElement, destinationPoint: Point) {
-    const command = this.MoveCommandExecutor.CommandsQueue.NextCommand(CommandType.Move);
+    let executor = this.getMoveExecutor(target.Uid);
+    if (!executor) {
+      executor = new MoveCommandExecutorService(target.Uid, this.applicationService);
+      this.MoveCommandsExecutor.push(executor);
+    }
+
+    const command = executor.CommandsQueue.NextCommand(CommandType.Move);
     command.RelatedElementId = target.Uid;
     command.TargetElementId = null;
     command.TargetLocation = destinationPoint;
-    this.MoveCommandExecutor.CommandsQueue.Enqueue(command);
+    executor.CommandsQueue.Enqueue(command);
   }
 
   ExecuteAcceptedCommand(command: Command): Promise<any> {
     switch (command.CommandType) {
       case CommandType.Move:
-        return this.MoveCommandExecutor.ExecuteMove(command.RelatedElementId, command.TargetLocation).then(v => {
-          this.MoveCommandExecutor.CommandsQueue.ReleaseWait();
+        const executorMove = this.getMoveExecutor(command.RelatedElementId);
+        return executorMove.ExecuteMove(command.RelatedElementId, command.TargetLocation).then(v => {
+          executorMove.CommandsQueue.ReleaseWait();
         });
       case CommandType.Attack:
-        return this.AttackCommandExecutor.ExecuteAttack(command.RelatedElementId, command.TargetElementId).then(v => {
-          this.AttackCommandExecutor.CommandsQueue.ReleaseWait();
+        const executorAttack = this.getAttackExecutor(command.RelatedElementId);
+        return executorAttack.ExecuteAttack(command.RelatedElementId, command.TargetElementId).then(v => {
+          executorAttack.CommandsQueue.ReleaseWait();
         });
     }
   }
 
   ClearCommandsQueueDueToRejection(relatedElementId: string) {
-    this.MoveCommandExecutor.CommandsQueue.Wait();
-    this.MoveCommandExecutor.CommandsQueue.ClearById(relatedElementId);
-    this.MoveCommandExecutor.CommandsQueue.ReleaseWait();
+    const executorMove = this.getMoveExecutor(relatedElementId);
+    executorMove.CommandsQueue.Wait();
+    executorMove.CommandsQueue.ClearById(relatedElementId);
+    executorMove.CommandsQueue.ReleaseWait();
 
-    this.AttackCommandExecutor.CommandsQueue.Wait();
-    this.AttackCommandExecutor.CommandsQueue.ClearById(relatedElementId);
-    this.AttackCommandExecutor.CommandsQueue.ReleaseWait();
+    const executorAttack = this.getAttackExecutor(relatedElementId);
+    executorAttack.CommandsQueue.Wait();
+    executorAttack.CommandsQueue.ClearById(relatedElementId);
+    executorAttack.CommandsQueue.ReleaseWait();
   }
 
   RunAsyncExecutors() {
@@ -70,30 +94,34 @@ export class CommandService implements ICommandService {
   }
 
   private fetchMoveCommands() {
-    if (this.MoveCommandExecutor.CommandsQueue.IsWaiting()) {
-      return;
-    }
+    for (const executor of this.MoveCommandsExecutor) {
+      if (executor.CommandsQueue.IsWaiting()) {
+        continue;
+      }
 
-    const command = this.MoveCommandExecutor.CommandsQueue.Dequeue();
-    if (command) {
-      const gameHttpService = this.applicationService.GetGameService();
+      const command = executor.CommandsQueue.Dequeue();
+      if (command) {
+        const gameHttpService = this.applicationService.GetGameService();
 
-      gameHttpService.NotifyCommand(command);
-      this.MoveCommandExecutor.CommandsQueue.Wait();
+        gameHttpService.NotifyCommand(command);
+        executor.CommandsQueue.Wait();
+      }
     }
   }
 
   private fetchAttackCommands() {
-    if (this.AttackCommandExecutor.CommandsQueue.IsWaiting()) {
-      return;
-    }
+    for (const executor of this.AttackCommandsExecutor) {
+      if (executor.CommandsQueue.IsWaiting()) {
+        continue;
+      }
 
-    const command = this.AttackCommandExecutor.CommandsQueue.Dequeue();
-    if (command) {
-      const gameHttpService = this.applicationService.GetGameService();
+      const command = executor.CommandsQueue.Dequeue();
+      if (command) {
+        const gameHttpService = this.applicationService.GetGameService();
 
-      gameHttpService.NotifyCommand(command);
-      this.AttackCommandExecutor.CommandsQueue.Wait();
+        gameHttpService.NotifyCommand(command);
+        executor.CommandsQueue.Wait();
+      }
     }
   }
 

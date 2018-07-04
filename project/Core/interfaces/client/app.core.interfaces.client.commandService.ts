@@ -8,9 +8,9 @@ import { IMapElement } from '../app.core.model.mapElement';
 
 export interface ICommandService {
 
-    MoveCommandExecutor: IMoveCommandExecutor;
+    MoveCommandsExecutor: Array<IMoveCommandExecutor>;
 
-    AttackCommandExecutor: IAttackCommandExecutor;
+    AttackCommandsExecutor: Array<IAttackCommandExecutor>;
 
     EnqueueAttackCommand(target: IMapElement, attacker: IMapElement);
 

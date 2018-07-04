@@ -42,16 +42,31 @@ export class AppComponent implements OnInit {
     // }
 
     const callback = () => {
-      const command = commandService.MoveCommandExecutor.CommandsQueue.Dequeue();
-      if (command) {
-        commandService.ExecuteAcceptedCommand(command).then(() => {
+      //console.log(commandService);
 
-          setTimeout(callback, 100);
+      for (const executor of commandService.MoveCommandsExecutor) {
+        console.log('start for');
+        if (executor.CommandsQueue.IsWaiting()) {
+          console.log('exit for wait');
+          continue;
+        }
 
-        });
-      } else {
-        setTimeout(callback, 100);
+        const command = executor.CommandsQueue.Dequeue();
+        if (command) {
+          console.log('wait');
+          executor.CommandsQueue.Wait();
+
+          console.log('execute');
+          commandService.ExecuteAcceptedCommand(command).then(() => {
+            console.log('end execute');
+
+
+          });
+        }
       }
+
+      setTimeout(callback, 1000);
+
 
     };
 
