@@ -49,4 +49,13 @@ export class PlanetDefenderHeaderComponent implements OnInit {
     this.applicationService.GetAuthenticationService().SetAuthenticationInfo(null);
   }
 
+  public currentUserName() {
+    const userName = this.applicationService.GetAuthenticationService().GetAuthenticationInfo().UserName;
+    return userName;
+  }
+
+  public enemyUserName() {
+
+  }
+
 }

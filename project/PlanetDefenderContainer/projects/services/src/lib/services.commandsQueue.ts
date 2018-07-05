@@ -3,8 +3,13 @@ import { UUID } from 'angular2-uuid';
 
 export class CommandsQueue implements ICommandQueue {
     private isWaiting: boolean = false;
-    private internalIndex: number = -1;
     private commandsQueue: Array<Command> = [];
+
+    constructor(relatedElementId: string) {
+      this.RelatedElementId = relatedElementId;
+    }
+
+    public RelatedElementId: string;
 
     public Dequeue(): Command {
         if (!this.commandsQueue) {
@@ -33,16 +38,15 @@ export class CommandsQueue implements ICommandQueue {
         this.isWaiting = false;
     }
 
-    public IsWaiting() {
+    public IsWaiting(): boolean {
         return this.isWaiting;
     }
 
-    public ClearById(relatedElementById: string) {
-      for (let i = 0 ; i < this.commandsQueue.length; i++) {
-        const command = this.commandsQueue[i];
-        if (command.RelatedElementId === relatedElementById) {
-          this.commandsQueue.splice(i, 1);
-        }
-      }
+    public HasElements(): boolean {
+        return (this.commandsQueue.length > 0);
+    }
+
+    public Clear() {
+      this.commandsQueue.length = 0;
     }
 }

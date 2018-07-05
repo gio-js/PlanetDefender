@@ -5,12 +5,15 @@ import { Building } from "../../model/game/app.core.model.game.building";
 import { IMoveCommandExecutor } from "./app.core.interfaces.client.moveCommandExecutor";
 import { Point } from '../../model/game/app.core.model.game.point';
 import { IMapElement } from '../app.core.model.mapElement';
+import { ICommandQueue } from './app.core.interfaces.client.commandsQueue';
 
 export interface ICommandService {
 
-    MoveCommandsExecutor: Array<IMoveCommandExecutor>;
+    MoveCommandsExecutor: IMoveCommandExecutor;
 
-    AttackCommandsExecutor: Array<IAttackCommandExecutor>;
+    AttackCommandsExecutor: IAttackCommandExecutor;
+
+    CommandsQueue: Array<ICommandQueue>;
 
     EnqueueAttackCommand(target: IMapElement, attacker: IMapElement);
 
@@ -18,7 +21,7 @@ export interface ICommandService {
 
     ExecuteAcceptedCommand(command: Command): Promise<any>;
 
-    ClearCommandsQueueDueToRejection(relatedElementId: string);
+    ClearCommandsQueue(relatedElementId: string);
 
     RunAsyncExecutors();
 

@@ -94,6 +94,15 @@ export class Map {
             southPoint = { X: destinationElement.X, Y: destinationElement.Y + 1},
             northPoint = { X: destinationElement.X, Y: destinationElement.Y - 1};
 
+        // the element is already in the correct position
+        if (
+            (relatedElement.Location.X == westPoint.X && relatedElement.Location.Y == westPoint.Y) ||
+            (relatedElement.Location.X == eastPoint.X && relatedElement.Location.Y == eastPoint.Y) ||
+            (relatedElement.Location.X == southPoint.X && relatedElement.Location.Y == southPoint.Y) ||
+            (relatedElement.Location.X == northPoint.X && relatedElement.Location.Y == northPoint.Y)
+        ) {
+            return []; // no movements
+        }
 
         let routeWest = [];
         if (westPoint.X >= 0 ) {
@@ -132,7 +141,7 @@ export class Map {
             return bestPath;
         }
 
-        return null;
+        return [];
     }
 
 }

@@ -1,91 +1,96 @@
 import { ApplicationService } from './services.applicationService';
 import { MoveCommandExecutorService } from './services.moveCommandExecutorService';
 import { AttackCommandExecutorService } from './services.attackCommandExecutorService';
+import { CommandsQueue } from './services.commandsQueue';
 import { Injectable } from "@angular/core";
 import {
   IAttackCommandExecutor, ICommandService, IMoveCommandExecutor,
-  Tank, Building, Command, CommandType, Point, IMapElement } from 'planet-defender-core';
+  Tank, Building, Command, CommandType, Point, IMapElement,
+  ICommandQueue } from 'planet-defender-core';
 
 @Injectable()
 export class CommandService implements ICommandService {
 
   private readonly INTERVAL_COMMANDS_EXECUTION_MS: number = 100;
 
-  MoveCommandsExecutor: Array<IMoveCommandExecutor>;
-  AttackCommandsExecutor: Array<IAttackCommandExecutor>;
+  MoveCommandsExecutor: IMoveCommandExecutor;
+  AttackCommandsExecutor: IAttackCommandExecutor;
+  CommandsQueue: Array<ICommandQueue>;
 
   constructor(private applicationService: ApplicationService) {
-    this.MoveCommandsExecutor = []; //new MoveCommandExecutorService(applicationService);
-    this.AttackCommandsExecutor = []; // new AttackCommandExecutorService(applicationService);
+    this.MoveCommandsExecutor = new MoveCommandExecutorService(this.applicationService);
+    this.AttackCommandsExecutor = new AttackCommandExecutorService(this.applicationService);
+    this.CommandsQueue = [];
   }
 
-  private getMoveExecutor(elementId: string) {
-    return this.MoveCommandsExecutor.find(m => m.RelatedElementId === elementId);
-  }
-
-  private getAttackExecutor(elementId: string) {
-    return this.AttackCommandsExecutor.find(m => m.RelatedElementId === elementId);
+  private getQueue(elementId: string): ICommandQueue {
+    return this.CommandsQueue.find(m => m.RelatedElementId === elementId);
   }
 
   EnqueueAttackCommand(target: IMapElement, attacker: IMapElement) {
-    let executor = this.getAttackExecutor(attacker.Uid);
-    if (!executor) {
-      executor = new AttackCommandExecutorService(attacker.Uid, this.applicationService);
-      this.AttackCommandsExecutor.push(executor);
+    let queue = this.getQueue(attacker.Uid);
+    if (!queue) {
+      queue = new CommandsQueue(attacker.Uid);
+      this.CommandsQueue.push(queue);
     }
 
-    const command = executor.CommandsQueue.NextCommand(CommandType.Attack);
+    const command = queue.NextCommand(CommandType.Attack);
     command.RelatedElementId = attacker.Uid;
     command.TargetElementId = target.Uid;
     command.TargetLocation = null;
-    executor.CommandsQueue.Enqueue(command);
+    queue.Enqueue(command);
   }
 
   EnqueueMoveCommands(target: IMapElement, destinationPoint: Point) {
-    let executor = this.getMoveExecutor(target.Uid);
-    if (!executor) {
-      executor = new MoveCommandExecutorService(target.Uid, this.applicationService);
-      this.MoveCommandsExecutor.push(executor);
+    let queue = this.getQueue(target.Uid);
+    if (!queue) {
+      queue = new CommandsQueue(target.Uid);
+      this.CommandsQueue.push(queue);
     }
 
-    const command = executor.CommandsQueue.NextCommand(CommandType.Move);
+    const command = queue.NextCommand(CommandType.Move);
     command.RelatedElementId = target.Uid;
     command.TargetElementId = null;
     command.TargetLocation = destinationPoint;
-    executor.CommandsQueue.Enqueue(command);
+    queue.Enqueue(command);
   }
 
   ExecuteAcceptedCommand(command: Command): Promise<any> {
+    const queue = this.getQueue(command.RelatedElementId);
+
     switch (command.CommandType) {
       case CommandType.Move:
-        const executorMove = this.getMoveExecutor(command.RelatedElementId);
-        return executorMove.ExecuteMove(command.RelatedElementId, command.TargetLocation).then(v => {
-          executorMove.CommandsQueue.ReleaseWait();
+        return this.MoveCommandsExecutor.ExecuteMove(command.RelatedElementId, command.TargetLocation).then(v => {
+          queue.ReleaseWait();
         });
       case CommandType.Attack:
-        const executorAttack = this.getAttackExecutor(command.RelatedElementId);
-        return executorAttack.ExecuteAttack(command.RelatedElementId, command.TargetElementId).then(v => {
-          executorAttack.CommandsQueue.ReleaseWait();
+        return this.AttackCommandsExecutor.ExecuteAttack(command.RelatedElementId, command.TargetElementId).then(v => {
+          queue.ReleaseWait();
+
+          // if the target element has still lives available, then continue with another attack command
+          const gameArena = this.applicationService.GetCurrentGameArena();
+          const relatedElement = gameArena.GetMapElementById(command.RelatedElementId);
+          const targetElement = gameArena.GetMapElementById(command.TargetElementId);
+
+          if (targetElement.Lives > 0) {
+            this.EnqueueAttackCommand(targetElement, relatedElement);
+          }
         });
     }
   }
 
-  ClearCommandsQueueDueToRejection(relatedElementId: string) {
-    const executorMove = this.getMoveExecutor(relatedElementId);
-    executorMove.CommandsQueue.Wait();
-    executorMove.CommandsQueue.ClearById(relatedElementId);
-    executorMove.CommandsQueue.ReleaseWait();
-
-    const executorAttack = this.getAttackExecutor(relatedElementId);
-    executorAttack.CommandsQueue.Wait();
-    executorAttack.CommandsQueue.ClearById(relatedElementId);
-    executorAttack.CommandsQueue.ReleaseWait();
+  ClearCommandsQueue(relatedElementId: string) {
+    const queue = this.getQueue(relatedElementId);
+    if (queue) {
+      queue.Wait();
+      queue.Clear();
+      queue.ReleaseWait();
+    }
   }
 
   RunAsyncExecutors() {
     setTimeout(() => {
-      this.fetchMoveCommands();
-      this.fetchAttackCommands();
+      this.fetchCommands();
 
       // recursive call
       this.RunAsyncExecutors();
@@ -93,34 +98,18 @@ export class CommandService implements ICommandService {
     }, this.INTERVAL_COMMANDS_EXECUTION_MS);
   }
 
-  private fetchMoveCommands() {
-    for (const executor of this.MoveCommandsExecutor) {
-      if (executor.CommandsQueue.IsWaiting()) {
+  private fetchCommands() {
+    for (const queue of this.CommandsQueue) {
+      if (queue.IsWaiting()) {
         continue;
       }
 
-      const command = executor.CommandsQueue.Dequeue();
+      const command = queue.Dequeue();
       if (command) {
         const gameHttpService = this.applicationService.GetGameService();
 
         gameHttpService.NotifyCommand(command);
-        executor.CommandsQueue.Wait();
-      }
-    }
-  }
-
-  private fetchAttackCommands() {
-    for (const executor of this.AttackCommandsExecutor) {
-      if (executor.CommandsQueue.IsWaiting()) {
-        continue;
-      }
-
-      const command = executor.CommandsQueue.Dequeue();
-      if (command) {
-        const gameHttpService = this.applicationService.GetGameService();
-
-        gameHttpService.NotifyCommand(command);
-        executor.CommandsQueue.Wait();
+        queue.Wait();
       }
     }
   }

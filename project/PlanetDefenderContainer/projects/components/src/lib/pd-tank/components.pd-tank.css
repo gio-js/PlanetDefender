@@ -9,10 +9,10 @@
   height: 100%;
   left: 0px;
   top: 0px;
-  -webkit-transition: left 1.5s ease-in, top 1.5s ease-in;
-  -moz-transition: left 1.5s ease-in, top 1.5s ease-in;
-  -o-transition: left 1.5s ease-in, top 1.5s ease-in;
-  transition: left 1.5s ease-in, top 1.5s ease-in;
+  -webkit-transition: left 0.7s linear, top 0.7s linear;
+  -moz-transition: left 0.7s linear, top 0.7s linear;
+  -o-transition: left 0.7s linear, top 0.7s linear;
+  transition: left 0.7s linear, top 0.7s linear;
   animation-iteration-count: infinite;
 }
 
@@ -57,27 +57,19 @@
 .step-right {
   left: 64px;
   position: relative;
-  /* transition-property: left;
-  transition-duration: 1.5s; */
 }
 
 .step-left {
   left: -64px;
   position: relative;
-  transition-property: left;
-  transition-duration: 1.5s;
 }
 
 .step-top {
   top: -64px;
   position: relative;
-  transition-property: top;
-  transition-duration: 1.5s;
 }
 
 .step-bottom {
   top: 64px;
   position: relative;
-  transition-property: top;
-  transition-duration: 1.5s;
 }

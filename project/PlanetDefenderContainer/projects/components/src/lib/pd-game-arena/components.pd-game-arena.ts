@@ -40,6 +40,10 @@ export class PlanetDefenderGameArenaComponent implements OnInit {
           if (currentSelectedElement) {
             const attackMovements = gameArea.Map.FindRouteForAttack(currentSelectedElement, tile.Location);
 
+            // clear queue
+            commandService.ClearCommandsQueue(currentSelectedElement.Uid);
+
+            // enqueue commands
             for (const point of attackMovements) {
               commandService.EnqueueMoveCommands(currentSelectedElement, {
                 X: point.X,
@@ -55,6 +59,10 @@ export class PlanetDefenderGameArenaComponent implements OnInit {
         if (currentSelectedElement) {
           const movementsPoints = gameArea.Map.FindRoutePointsByElement(currentSelectedElement, tile.Location);
 
+          // clear queue
+          commandService.ClearCommandsQueue(currentSelectedElement.Uid);
+
+          // enqueue commands
           for (const point of movementsPoints) {
             commandService.EnqueueMoveCommands(currentSelectedElement, {
               X: point.X,

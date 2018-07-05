@@ -3,7 +3,7 @@ import {
   IGameService, Building, GameArena, Tank, Command,
   PRIMARY_SERVICE_ENDPOINT, WebSocketMessage, ICommandService,
   MessageOutcomeType,
-  UserStatistics} from "planet-defender-core";
+  UserStatistics, GameArenaFactory } from "planet-defender-core";
 import { HttpService } from "./services.httpService";
 import * as socketIOClient from 'socket.io-client';
 import { Subject, Observable } from "rxjs";
@@ -60,7 +60,7 @@ export class GameHttpService implements IGameService {
 
           console.log("resultObserver message" + JSON.stringify(data));
           const message = data as WebSocketMessage;
-          switch(message.MessageOutcome) {
+          switch (message.MessageOutcome) {
             case MessageOutcomeType.Accepted :
             this.OnCommandAccepted(message.Command);
             break;
@@ -81,7 +81,7 @@ export class GameHttpService implements IGameService {
 
         // create web socket commands listener
         this.createWebSocketListener(arena.Uid);
-        return arena;
+        return GameArenaFactory.Create(arena);
 
       });
     }
@@ -91,7 +91,7 @@ export class GameHttpService implements IGameService {
 
         // create web socket commands listener
         this.createWebSocketListener(arena.Uid);
-        return arena;
+        return GameArenaFactory.Create(arena);
 
       });
     }
@@ -113,6 +113,6 @@ export class GameHttpService implements IGameService {
     }
 
     OnCommandRejected(command: Command) {
-      this.commandService.ClearCommandsQueueDueToRejection(command.RelatedElementId);
+      this.commandService.ClearCommandsQueue(command.RelatedElementId);
     }
 }

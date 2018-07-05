@@ -11,7 +11,8 @@ import {
   TILES_NUMBER,
   IMapMovableElement,
   Building,
-  Point
+  Point,
+  GameArenaFactory
 } from "planet-defender-core";
 import { ApplicationService } from "services";
 import PathFind from 'pathfinding';
@@ -22,58 +23,17 @@ import PathFind from 'pathfinding';
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent implements OnInit {
-  public GameArena = new GameArena();
+
+  private GameArena = null;
 
   constructor(@Inject(ApplicationService) private applicationService: ApplicationService) {
-    this.GameArena.Randomize('5b395390c4c97f00142615ae');
-    this.applicationService.SetCurrentGameArena(this.GameArena);
-    const commandService = this.applicationService.GetCommandService();
-    // const defTankAtt = this.GameArena.Attacker.Tanks[0];
-    // const movementPoints = this.GameArena.Map.FindRoutePointsByElement(defTankAtt, {
-    //   X: 3,
-    //   Y: 3
-    // });
 
-    // for (const point of movementPoints) {
-    //   commandService.EnqueueMoveCommands(defTankAtt, {
-    //     X: point.X,
-    //     Y: point.Y
-    //   });
-    // }
-
-    const callback = () => {
-      //console.log(commandService);
-
-      for (const executor of commandService.MoveCommandsExecutor) {
-        console.log('start for');
-        if (executor.CommandsQueue.IsWaiting()) {
-          console.log('exit for wait');
-          continue;
-        }
-
-        const command = executor.CommandsQueue.Dequeue();
-        if (command) {
-          console.log('wait');
-          executor.CommandsQueue.Wait();
-
-          console.log('execute');
-          commandService.ExecuteAcceptedCommand(command).then(() => {
-            console.log('end execute');
-
-
-          });
-        }
-      }
-
-      setTimeout(callback, 1000);
-
-
-    };
-
-    callback();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    // this.testGame();
+  }
 
   public isAuthenticated(): boolean {
     const authenticationService = this.applicationService.GetAuthenticationService();
@@ -82,5 +42,57 @@ export class AppComponent implements OnInit {
 
   public getCurrentGameArena(): GameArena {
     return this.applicationService.GetCurrentGameArena();
+  }
+
+  public createGame() {
+    const gameService = this.applicationService.GetGameService();
+    const userId = this.applicationService.GetAuthenticationService().GetAuthenticationInfo().UserId;
+    gameService.CreateArena(userId).then(arena => {
+      const gameArena = GameArenaFactory.Create(arena);
+      this.applicationService.SetCurrentGameArena(gameArena);
+      return gameArena;
+    });
+  }
+
+  private testGame() {
+    this.GameArena.Randomize('5b395390c4c97f00142615ae');
+    this.GameArena.RandomizeAttacker('todo');
+
+    this.applicationService.SetCurrentGameArena(this.GameArena);
+    const commandService = this.applicationService.GetCommandService();
+
+    const callback = () => {
+      console.log(commandService.CommandsQueue);
+
+      let index = 0;
+      for (const queue of commandService.CommandsQueue) {
+        index++;
+        console.log(index, 'start for');
+        if (queue.IsWaiting()) {
+          console.log(index, 'exit for wait');
+          continue;
+        }
+
+        const command = queue.Dequeue();
+        if (command) {
+          const internalIndex = index;
+          console.log(internalIndex, 'wait');
+          queue.Wait();
+
+          console.log(internalIndex, 'execute');
+          commandService.ExecuteAcceptedCommand(command).then(() => {
+            console.log(internalIndex, 'end execute');
+
+
+          });
+        }
+      }
+
+      setTimeout(callback, 10);
+
+
+    };
+
+    callback();
   }
 }

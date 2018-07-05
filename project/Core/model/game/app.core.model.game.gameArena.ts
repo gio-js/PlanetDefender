@@ -56,16 +56,6 @@ export class GameArena {
         defender.Tanks = [];
         defender.Buildings = [];
     
-        // const baseBuilding = new Building();
-        // baseBuilding.ElementType = MapElementType.Building;
-        // baseBuilding.IsUnderAttack = true;
-        // baseBuilding.Lives = 2;
-        // baseBuilding.Location = {
-        //   X: 6,
-        //   Y: 5
-        // };
-        // defender.Buildings.push(baseBuilding);
-
         const numberOfTiles = TILES_NUMBER * TILES_NUMBER;
         const tilesIndexes = [];
         let buildingsCount = BUILDINGS_INITIAL_COUNT, tanksCount = TANKS_INITIAL_COUNT;
@@ -120,5 +110,73 @@ export class GameArena {
         this.Defender = defender;
         this.Uid = uuidv1();
         this.Map = new Map(null, defender);
+    }
+
+    /**
+     * Randomize the attacker user related objects
+     */
+    public RandomizeAttacker(attackerUserId: string) {
+        const attacker = new ArenaPlayer();
+        attacker.UserId = attackerUserId;
+        attacker.UserType = UserType.Attacker;
+        attacker.Tanks = [];
+        attacker.Buildings = [];
+
+        let arrayToShuffle = [];
+        let attackerTanksLeft = TANKS_INITIAL_COUNT;
+
+        for (let y = 0; y < TILES_NUMBER; y++) {
+            for (let x = 0; x < TILES_NUMBER; x++) {
+                arrayToShuffle.push((() => {
+                    const tile = this.Map.getTileAt(x, y);
+
+                    if (!tile.Element) {
+                        if (attackerTanksLeft > 0) {
+                            attackerTanksLeft--;
+                            return 3;
+                        }
+
+                        return 0;
+                    }
+
+                    if (tile.Element.ElementType == MapElementType.Building) {
+                        return 1;
+                    }
+
+                    if (tile.Element.ElementType == MapElementType.Tank) {
+                        return 2;
+                    }
+
+                })());
+            }
+        }
+
+        // shuffle the result array
+        shuffle(arrayToShuffle);
+
+        // create buildings and tanks
+        for(let index = 0; index < arrayToShuffle.length; index++) {
+            let tileValue = arrayToShuffle[index];
+
+            if (tileValue === 3) { // the attacker tank (defined in the previous loop)
+                const attTank = new Tank();
+                attTank.Direction = MapElementDirection.South;
+                attTank.ElementType = MapElementType.Tank;
+                attTank.TankRoleType = TankRoleType.Attacker;
+                attTank.Location = {
+                    X: index % TILES_NUMBER,
+                    Y: parseInt((index / TILES_NUMBER).toString())
+                };
+                attTank.Lives = TANKS_INITIAL_LIVES;
+                attTank.Uid = uuidv1();
+                attTank.OwnerUserId = attackerUserId;
+                attacker.Tanks.push(attTank);
+            }
+        }
+
+        this.Attacker = attacker;
+
+        // regenerate map references
+        this.Map = new Map(attacker, this.Defender);
     }
 }

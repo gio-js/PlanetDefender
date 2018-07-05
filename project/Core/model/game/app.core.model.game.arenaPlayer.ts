@@ -7,6 +7,7 @@ import { Building } from "./app.core.model.game.building";
 export class ArenaPlayer {
 
     public UserId: string;
+    public UserName: string;
     public UserType: UserType;
     public Tanks: Array<Tank>;
     public Buildings: Array<Building>;

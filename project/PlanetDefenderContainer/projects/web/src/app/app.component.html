@@ -2,3 +2,27 @@
 
 <pd-header *ngIf="isAuthenticated()"></pd-header>
 <pd-game-arena *ngIf="isAuthenticated() && getCurrentGameArena() !== null"></pd-game-arena>
+
+
+<div class="bs-docs-section" *ngIf="isAuthenticated() && getCurrentGameArena() === null">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="page-header">
+        <h1 id="containers">Containers</h1>
+      </div>
+      <div class="bs-component">
+        <div class="jumbotron">
+          <h1 class="display-3">Planet Defender</h1>
+          <p class="lead">Sei pronto a difendere il tuo pianeta dalle invasioni aliene?!!</p>
+          <hr class="my-4">
+          <p>Per iniziare crea subito una nuova arena.</p>
+          <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button" (click)="createGame()">Nuova partita!</a>
+          </p>
+        </div>
+      <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div></div>
+    </div>
+  </div>
+
+</div>

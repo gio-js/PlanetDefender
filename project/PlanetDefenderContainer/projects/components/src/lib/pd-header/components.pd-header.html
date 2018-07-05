@@ -13,7 +13,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="menu">
                         <a class="dropdown-item" (click)="newGame()">Nuova partita</a>
-                        <a class="dropdown-item" (click)="joinGame()">Trova partita</a>
+                        <a class="dropdown-item" (click)="joinGame()">Unisciti ad una partita</a>
                         <a class="dropdown-item" (click)="showStats()">Statistiche</a>
                         <a class="dropdown-item" (click)="exitGame()">Esci</a>
                     </div>
@@ -22,7 +22,10 @@
 
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="https://github.com/gio-js/PlanetDefender" target="_blank">@github</a>
+                  <strong>{{ currentUserName() }}</strong>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="https://github.com/gio-js/PlanetDefender" target="_blank">@github</a>
                 </li>
             </ul>
 

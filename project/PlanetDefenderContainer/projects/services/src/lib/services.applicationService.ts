@@ -13,7 +13,7 @@ export class ApplicationService {
 
   private gameService: IGameService;
   private uiService: UiService;
-  private currentGameArena: GameArena;
+  private currentGameArena: GameArena = null;
   private commandService: ICommandService;
   private authenticationService: IAuthenticationService;
   private httpService: HttpService;
@@ -43,7 +43,7 @@ export class ApplicationService {
     this.uiService = new UiService(gameArena);
   }
 
-  public GetCommandService() {
+  public GetCommandService(): ICommandService {
     return this.commandService;
   }
 

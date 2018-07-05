@@ -9,13 +9,8 @@ import { CommandsQueue } from './services.commandsQueue';
 @Injectable()
 export class MoveCommandExecutorService implements IMoveCommandExecutor {
 
-  constructor(relatedElementId: string, private applicationService: ApplicationService) {
-    this.RelatedElementId = relatedElementId;
-    this.CommandsQueue = new CommandsQueue();
+  constructor(private applicationService: ApplicationService) {
   }
-
-  public CommandsQueue: ICommandQueue;
-  public RelatedElementId: string;
 
   ExecuteMove(relatedElementId: string, destinationPoint: Point): Promise<boolean> {
     const uiService = this.applicationService.GetUIService();
