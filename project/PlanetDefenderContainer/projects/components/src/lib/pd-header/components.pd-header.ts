@@ -59,4 +59,10 @@ export class PlanetDefenderHeaderComponent implements OnInit {
     return "";
   }
 
+  public currentGameId() {
+    const gameArena = this.applicationService.GetCurrentGameArena();
+    return gameArena.Uid;
+  }
+
+
 }
