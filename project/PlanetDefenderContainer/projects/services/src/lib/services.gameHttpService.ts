@@ -1,9 +1,11 @@
 import { Injectable } from "@angular/core";
 import {
   IGameService, Building, GameArena, Tank, Command,
-  PRIMARY_SERVICE_ENDPOINT, WebSocketMessage, ICommandService,
+  PRIMARY_SERVICE_ENDPOINT, ICommandService,
   MessageOutcomeType,
-  UserStatistics, GameArenaFactory } from "planet-defender-core";
+  UserStatistics, GameArenaFactory,
+  WEBSOCKET_SERVICE_ENDPOINT, WEBSOCKET_EVENT_NEW_PLAYER_JOINED,
+  WEBSOCKET_COMMAND_ACCEPTED, WEBSOCKET_COMMAND_REJECTED } from "planet-defender-core";
 import { HttpService } from "./services.httpService";
 import * as socketIOClient from 'socket.io-client';
 import { Subject, Observable } from "rxjs";
@@ -17,67 +19,53 @@ export class GameHttpService implements IGameService {
     private socket = null;
 
     /**
-     * The web socket rxjs observer
+     * Received new player joined event
      */
-    private webSocketObserver: Subject<MessageEvent>;
+    public OnPlayerJoined: Subject<GameArena> = new Subject<GameArena>();
 
-    constructor(private http: HttpService, private commandService: ICommandService) {
+    constructor(private http: HttpService, private commandService: ICommandService) { }
 
-    }
-
-    private createWebSocketListener(channelId: string): Subject<MessageEvent> {
+    private createWebSocketListener(channelId: string) {
       if (this.socket) {
         this.socket.close();
         this.socket.disconnect();
         this.socket = null;
       }
 
-      if (this.webSocketObserver) {
-        this.webSocketObserver.unsubscribe();
-        this.webSocketObserver = null;
+      if (this.OnPlayerJoined) {
+        this.OnPlayerJoined.unsubscribe();
+        this.OnPlayerJoined = null;
       }
 
-      this.socket = socketIOClient.connect(PRIMARY_SERVICE_ENDPOINT);
+      this.socket = socketIOClient.connect(WEBSOCKET_SERVICE_ENDPOINT + "/" + channelId);
 
-      // observable creation
-      const observable = new Observable(observer => {
+      this.socket.on(WEBSOCKET_EVENT_NEW_PLAYER_JOINED, (arena) => {
+        console.log("Received message" + JSON.stringify(arena));
 
-        this.socket.on('message', (data) => {
-          console.log("Received message" + JSON.stringify(data));
-          observer.next(data);
-        });
+        // regenerate arena object
+        const arenaInstance = GameArenaFactory.Create(arena);
 
-        return () => {
-          this.socket.disconnect();
-        };
-
+        // raise on player joined event
+        this.OnPlayerJoined.next(arenaInstance);
       });
 
-      // the observer management
-      const resultObserver = {
-        next: (data: Object) => {
-            // this.socket.emit('message', JSON.stringify(data));
+      this.socket.on(WEBSOCKET_COMMAND_ACCEPTED, (command) => {
+        console.log("Received message" + JSON.stringify(command));
 
-          console.log("resultObserver message" + JSON.stringify(data));
-          const message = data as WebSocketMessage;
-          switch (message.MessageOutcome) {
-            case MessageOutcomeType.Accepted :
-            this.OnCommandAccepted(message.Command);
-            break;
-            case MessageOutcomeType.Rejected :
-            this.OnCommandRejected(message.Command);
-            break;
-          }
-        },
-      };
+        // regenerate arena object
+        this.OnCommandAccepted(command);
+      });
 
-      // observer definition return in order to get any update by websocket
-      this.webSocketObserver = Subject.create(resultObserver, observable);
-      return this.webSocketObserver;
+      this.socket.on(WEBSOCKET_COMMAND_REJECTED, (command) => {
+        console.log("Received message" + JSON.stringify(command));
+
+        // regenerate arena object
+        this.OnCommandRejected(command);
+      });
     }
 
-    JoinArena(): Promise<GameArena> {
-      return this.http.Get("/game/joinArena", "").then(arena => {
+    JoinArena(attackerUserId: string): Promise<GameArena> {
+      return this.http.Get("/game/joinArena/" + attackerUserId, "").then(arena => {
 
         // create web socket commands listener
         this.createWebSocketListener(arena.Uid);

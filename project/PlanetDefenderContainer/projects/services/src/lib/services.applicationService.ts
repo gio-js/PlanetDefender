@@ -24,6 +24,14 @@ export class ApplicationService {
     this.commandService = new CommandService(this);
     this.gameService = new GameHttpService(this.httpService, this.commandService);
     this.authenticationService = new AuthenticationService(this.httpService);
+
+    // subscribe command service events
+    this.gameService.OnPlayerJoined.subscribe(arena => {
+      this.SetCurrentGameArena(arena);
+    });
+
+    // run game loop
+    this.commandService.RunAsyncExecutors();
   }
 
   public GetGameService(): IGameService {

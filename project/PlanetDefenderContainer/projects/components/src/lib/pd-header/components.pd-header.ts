@@ -26,8 +26,9 @@ export class PlanetDefenderHeaderComponent implements OnInit {
 
   public joinGame() {
     const gameService = this.applicationService.GetGameService();
+    const userId = this.applicationService.GetAuthenticationService().GetAuthenticationInfo().UserId;
 
-    gameService.JoinArena().then(arena => {
+    gameService.JoinArena(userId).then(arena => {
       if (arena) {
         const gameArena = GameArenaFactory.Create(arena);
         this.applicationService.SetCurrentGameArena(gameArena);
@@ -55,7 +56,7 @@ export class PlanetDefenderHeaderComponent implements OnInit {
   }
 
   public enemyUserName() {
-
+    return "";
   }
 
 }

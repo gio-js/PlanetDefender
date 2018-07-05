@@ -4,6 +4,11 @@
 export const PRIMARY_SERVICE_ENDPOINT: string = "http://planet-defender.herokuapp.com/api/v1";
 
 /**
+ * Service endpoint
+ */
+export const WEBSOCKET_SERVICE_ENDPOINT: string = "http://planet-defender.herokuapp.com";
+
+/**
  * WebSocket: new player joined
  */
 export const WEBSOCKET_EVENT_NEW_PLAYER_JOINED: string = "WEBSOCKET_EVENT_NEW_PLAYER_JOINED";

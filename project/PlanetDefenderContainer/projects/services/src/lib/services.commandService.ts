@@ -11,7 +11,7 @@ import {
 @Injectable()
 export class CommandService implements ICommandService {
 
-  private readonly INTERVAL_COMMANDS_EXECUTION_MS: number = 100;
+  private readonly INTERVAL_COMMANDS_EXECUTION_MS: number = 50;
 
   MoveCommandsExecutor: IMoveCommandExecutor;
   AttackCommandsExecutor: IAttackCommandExecutor;
@@ -28,6 +28,7 @@ export class CommandService implements ICommandService {
   }
 
   EnqueueAttackCommand(target: IMapElement, attacker: IMapElement) {
+    const gameArena = this.applicationService.GetCurrentGameArena();
     let queue = this.getQueue(attacker.Uid);
     if (!queue) {
       queue = new CommandsQueue(attacker.Uid);
@@ -35,6 +36,7 @@ export class CommandService implements ICommandService {
     }
 
     const command = queue.NextCommand(CommandType.Attack);
+    command.ArenaUid = gameArena.Uid;
     command.RelatedElementId = attacker.Uid;
     command.TargetElementId = target.Uid;
     command.TargetLocation = null;
@@ -42,6 +44,7 @@ export class CommandService implements ICommandService {
   }
 
   EnqueueMoveCommands(target: IMapElement, destinationPoint: Point) {
+    const gameArena = this.applicationService.GetCurrentGameArena();
     let queue = this.getQueue(target.Uid);
     if (!queue) {
       queue = new CommandsQueue(target.Uid);
@@ -49,6 +52,7 @@ export class CommandService implements ICommandService {
     }
 
     const command = queue.NextCommand(CommandType.Move);
+    command.ArenaUid = gameArena.Uid;
     command.RelatedElementId = target.Uid;
     command.TargetElementId = null;
     command.TargetLocation = destinationPoint;

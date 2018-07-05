@@ -7,9 +7,11 @@ import { Command } from "../../model/game/app.core.model.game.command";
  */
 export interface IGameService {
 
+    OnPlayerJoined: any; // event of GameArena
+
     CreateArena(currentUserId: string): Promise<GameArena>;
 
-    JoinArena(): Promise<GameArena>;
+    JoinArena(attackerUserId: string): Promise<GameArena>;
 
     NotifyCommand(command: Command): Promise<any>;
 

@@ -3,6 +3,7 @@ import { Point } from "./app.core.model.game.point";
 
 export class Command {
     public Uid: string;
+    public ArenaUid: string;
     public CommandType: CommandType;
     public RelatedElementId: string;
     public TargetElementId: string;

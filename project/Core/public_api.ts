@@ -20,7 +20,6 @@ export * from './model/game/app.core.model.game.command';
 export * from './model/dal/app.model.dal.user';
 export * from './model/dal/app.model.dal.userSatistics';
 export * from './model/business/app.core.model.business.authenticationInfo';
-export * from './model/business/app.core.model.business.webSocketMessage';
 
 export * from './interfaces/app.core.model.mapElement';
 export * from './interfaces/app.core.model.mapMovableElement';
