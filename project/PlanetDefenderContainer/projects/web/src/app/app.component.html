@@ -1,10 +1,13 @@
 <pd-login *ngIf="!isAuthenticated()"></pd-login>
 
 <pd-header *ngIf="isAuthenticated()"></pd-header>
-<pd-game-arena *ngIf="isAuthenticated() && getCurrentGameArena() !== null"></pd-game-arena>
 
 
-<div class="bs-docs-section" *ngIf="isAuthenticated() && getCurrentGameArena() === null">
+<pd-game-arena *ngIf="isAuthenticated() && isGamePageView() && getCurrentGameArena() !== null"></pd-game-arena>
+
+<pd-statistics *ngIf="isAuthenticated() && isStatisticsPageView()"></pd-statistics>
+
+<div class="bs-docs-section" *ngIf="isAuthenticated() && !isStatisticsPageView() && !isGamePageView()">
 
   <div class="row">
     <div class="col-lg-12">

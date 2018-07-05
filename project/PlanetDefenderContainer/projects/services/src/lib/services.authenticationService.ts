@@ -6,6 +6,8 @@ import { HttpService } from './services.httpService';
 export class AuthenticationService implements IAuthenticationService {
 
   private authenticationInfo: AuthenticationInfo;
+  private isStatisticsPageView = false;
+  private isGamePageView = false;
 
   constructor(private http: HttpService) { }
 
@@ -43,5 +45,4 @@ export class AuthenticationService implements IAuthenticationService {
     this.authenticationInfo = auth;
     this.http.SetAuthenticationInfo(auth);
   }
-
 }

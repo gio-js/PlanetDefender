@@ -12,6 +12,7 @@ import { PlanetDefenderBuildingComponent } from './pd-building/components.pd-bui
 import { PlanetDefenderLifeBarComponent } from './pd-life-bar/components.pd-life-bar';
 import { PlanetDefenderElementUnderAttackComponent } from './pd-element-under-attack/components.pd-element-under-attack';
 import { PlanetDefenderElementSelectedComponent } from './pd-element-selected/components.pd-element-selected';
+import { PlanetDefenderStatisticsComponent } from './pd-statistics/components.pd-statistics';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { PlanetDefenderElementSelectedComponent } from './pd-element-selected/co
     PlanetDefenderBuildingComponent,
     PlanetDefenderLifeBarComponent,
     PlanetDefenderElementUnderAttackComponent,
-    PlanetDefenderElementSelectedComponent
+    PlanetDefenderElementSelectedComponent,
+    PlanetDefenderStatisticsComponent
   ],
   exports: [
     PlanetDefenderHeaderComponent,
@@ -40,7 +42,8 @@ import { PlanetDefenderElementSelectedComponent } from './pd-element-selected/co
     PlanetDefenderBuildingComponent,
     PlanetDefenderLifeBarComponent,
     PlanetDefenderElementUnderAttackComponent,
-    PlanetDefenderElementSelectedComponent
+    PlanetDefenderElementSelectedComponent,
+    PlanetDefenderStatisticsComponent
   ],
   providers: [
     ApplicationService

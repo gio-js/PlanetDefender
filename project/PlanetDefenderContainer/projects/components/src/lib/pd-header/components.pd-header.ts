@@ -22,6 +22,8 @@ export class PlanetDefenderHeaderComponent implements OnInit {
       this.applicationService.SetCurrentGameArena(gameArena);
       return gameArena;
     });
+
+    this.applicationService.IsGamePageView = true;
   }
 
   public joinGame() {
@@ -36,6 +38,8 @@ export class PlanetDefenderHeaderComponent implements OnInit {
       }
       return null;
     });
+
+    this.applicationService.IsGamePageView = true;
   }
 
   public showStats() {
@@ -44,6 +48,8 @@ export class PlanetDefenderHeaderComponent implements OnInit {
     gameService.GetStatistics(userId).then(stats => {
 
     });
+
+    this.applicationService.IsStatisticsPageView = true;
   }
 
   public exitGame() {
@@ -61,7 +67,12 @@ export class PlanetDefenderHeaderComponent implements OnInit {
 
   public currentGameId() {
     const gameArena = this.applicationService.GetCurrentGameArena();
-    return gameArena.Uid;
+
+    if (gameArena) {
+      return gameArena.Uid;
+    }
+
+    return null;
   }
 
 

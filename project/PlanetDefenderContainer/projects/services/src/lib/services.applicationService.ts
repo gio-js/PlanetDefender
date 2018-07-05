@@ -18,6 +18,8 @@ export class ApplicationService {
   private authenticationService: IAuthenticationService;
   private httpService: HttpService;
   private selectedElement: IMapElement;
+  private isStatisticsPageView = false;
+  private isGamePageView = false;
 
   constructor(private http: HttpClient) {
     this.httpService = new HttpService(http);
@@ -65,6 +67,22 @@ export class ApplicationService {
 
   public SetSelectedElement(element) {
     this.selectedElement = element;
+  }
+
+  get IsStatisticsPageView(): boolean {
+      return this.isStatisticsPageView;
+  }
+  set IsStatisticsPageView(val: boolean) {
+      this.isStatisticsPageView = val;
+      this.isGamePageView = !this.isStatisticsPageView;
+  }
+
+  get IsGamePageView(): boolean {
+      return this.isGamePageView;
+  }
+  set IsGamePageView(val: boolean) {
+      this.isGamePageView = val;
+      this.isStatisticsPageView = !this.isGamePageView;
   }
 
 }
