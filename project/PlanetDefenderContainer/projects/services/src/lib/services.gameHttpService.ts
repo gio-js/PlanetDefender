@@ -32,10 +32,10 @@ export class GameHttpService implements IGameService {
         this.socket = null;
       }
 
-      if (this.OnPlayerJoined) {
-        this.OnPlayerJoined.unsubscribe();
-        this.OnPlayerJoined = null;
-      }
+      // if (this.OnPlayerJoined) {
+      //   this.OnPlayerJoined.unsubscribe();
+      //   this.OnPlayerJoined = null;
+      // }
 
       this.socket = socketIOClient.connect(WEBSOCKET_SERVICE_ENDPOINT + "/" + channelId);
 
@@ -43,7 +43,7 @@ export class GameHttpService implements IGameService {
         console.log("Received message" + JSON.stringify(arena));
 
         // regenerate arena object
-        const arenaInstance = GameArenaFactory.Create(arena);
+        const arenaInstance = GameArenaFactory.Create(JSON.parse(arena));
 
         // raise on player joined event
         this.OnPlayerJoined.next(arenaInstance);
@@ -93,7 +93,9 @@ export class GameHttpService implements IGameService {
     }
 
     NotifyCommand(command: Command): Promise<any> {
-      return this.http.Post("/game/notifyCommand", command);
+      return this.http.Post("/game/notifyCommand", {
+        command: command
+      });
     }
 
     OnCommandAccepted(command: Command): any {

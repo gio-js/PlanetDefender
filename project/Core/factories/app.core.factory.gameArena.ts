@@ -8,15 +8,6 @@ export const GameArenaFactory = {
     Create: (arena: GameArena) => {
         const game = new GameArena(); 
 
-        game.Attacker = null;
-        if (arena.Attacker) {
-            game.Attacker = new ArenaPlayer();
-            game.Attacker.Buildings = arena.Attacker.Buildings;
-            game.Attacker.Tanks = arena.Attacker.Tanks;
-            game.Attacker.UserId = arena.Attacker.UserId;
-            game.Attacker.UserType = arena.Attacker.UserType;
-        }
-
         game.Defender = null;
         if (arena.Defender) {
             game.Defender = new ArenaPlayer();
@@ -24,6 +15,15 @@ export const GameArenaFactory = {
             game.Defender.Tanks = arena.Defender.Tanks;
             game.Defender.UserId = arena.Defender.UserId;
             game.Defender.UserType = arena.Defender.UserType;
+        }
+
+        game.Attacker = null;
+        if (arena.Attacker) {
+            game.Attacker = new ArenaPlayer();
+            game.Attacker.Buildings = arena.Attacker.Buildings;
+            game.Attacker.Tanks = arena.Attacker.Tanks;
+            game.Attacker.UserId = arena.Attacker.UserId;
+            game.Attacker.UserType = arena.Attacker.UserType;
         }
         
 

@@ -33,6 +33,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     // this.testGame();
+
+    // console.log(JSON.stringify(this.GameArena));
+    // const instance = GameArenaFactory.Create(JSON.parse(JSON.stringify(this.GameArena)));
+
+    // console.log(instance);
   }
 
   public isAuthenticated(): boolean {
@@ -55,8 +60,9 @@ export class AppComponent implements OnInit {
   }
 
   private testGame() {
+    this.GameArena = new GameArena;
     this.GameArena.Randomize('5b395390c4c97f00142615ae');
-    this.GameArena.RandomizeAttacker('todo');
+    //this.GameArena.RandomizeAttacker('todo');
 
     this.applicationService.SetCurrentGameArena(this.GameArena);
     const commandService = this.applicationService.GetCommandService();
