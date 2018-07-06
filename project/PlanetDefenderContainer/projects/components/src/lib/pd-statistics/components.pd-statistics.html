@@ -1,20 +1,44 @@
+<div class="bs-docs-section">
 
-<div>
-  Unità perse: {{ Stats.UnitsLosts }}
-</div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="page-header">
+        <h1 id="containers">Statistiche</h1>
+      </div>
+      <div class="bs-component">
+        <div class="jumbotron">
+          <h1 class="display-3">Statistiche utente</h1>
+          <div class="row">
+            <div class="col-md-6">
+              <div>
+                Unità perse: {{ Stats.UnitsLosts }}
+              </div>
 
-<div>
-  Edifici perse: {{ Stats.BuildingLosts }}
-</div>
+              <div>
+                Edifici perse: {{ Stats.BuildingLosts }}
+              </div>
 
-<div>
-  Partite giocate: {{ Stats.VictoriesCount + Stats.DefeatsCount }}
-</div>
+              <div>
+                Partite giocate: {{ Stats.VictoriesCount + Stats.DefeatsCount }}
+              </div>
+            </div>
 
-<div>
-  Partite vinte: {{ Stats.VictoriesCount }}
-</div>
+            <div class="col-md-6">
+              <div>
+                Partite vinte: {{ Stats.VictoriesCount }}
+              </div>
 
-<div>
-  Partite perse: {{ Stats.DefeatsCount }}
-</div>
+              <div>
+                Partite perse: {{ Stats.DefeatsCount }}
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>

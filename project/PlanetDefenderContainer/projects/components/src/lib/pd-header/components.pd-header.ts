@@ -24,6 +24,7 @@ export class PlanetDefenderHeaderComponent implements OnInit {
     });
 
     this.applicationService.IsGamePageView = true;
+    this.applicationService.IsStatisticsPageView = false;
   }
 
   public joinGame() {
@@ -40,6 +41,7 @@ export class PlanetDefenderHeaderComponent implements OnInit {
     });
 
     this.applicationService.IsGamePageView = true;
+    this.applicationService.IsStatisticsPageView = false;
   }
 
   public showStats() {
@@ -50,10 +52,15 @@ export class PlanetDefenderHeaderComponent implements OnInit {
     });
 
     this.applicationService.IsStatisticsPageView = true;
+    this.applicationService.IsGamePageView = false;
   }
 
   public exitGame() {
     this.applicationService.GetAuthenticationService().SetAuthenticationInfo(null);
+    this.applicationService.SetCurrentGameArena(null);
+
+    this.applicationService.IsGamePageView = false;
+    this.applicationService.IsStatisticsPageView = false;
   }
 
   public currentUserName() {

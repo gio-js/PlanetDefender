@@ -27,11 +27,11 @@
 }
 
 .tank.attacker {
-  background: url(../assets/images/attacker-tank.png);
+  background: url(./assets/images/attacker-tank.png);
 }
 
 .tank.defender {
-  background: url(../assets/images/defender-tank.png);
+  background: url(./assets/images/defender-tank.png);
 }
 
 .tank.south {

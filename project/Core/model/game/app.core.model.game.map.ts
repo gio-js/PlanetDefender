@@ -68,10 +68,17 @@ export class Map {
         const paths = finder.findPath(sourcePoint.X, sourcePoint.Y, destinationPoint.X, destinationPoint.Y, grid);
         const points: Array<Point> = [];
         for (const path of paths) {
-          points.push({
-            X: path[0],
-            Y: path[1]
-          });
+            const pathX = path[0];
+            const pathY = path[1];
+
+            if (pathX == sourcePoint.X && pathY == sourcePoint.Y) {
+                continue;
+            }
+
+            points.push({
+                X: path[0],
+                Y: path[1]
+            });
         }
     
         return points;

@@ -74,7 +74,6 @@ export class ApplicationService {
   }
   set IsStatisticsPageView(val: boolean) {
       this.isStatisticsPageView = val;
-      this.isGamePageView = !this.isStatisticsPageView;
   }
 
   get IsGamePageView(): boolean {
@@ -82,7 +81,6 @@ export class ApplicationService {
   }
   set IsGamePageView(val: boolean) {
       this.isGamePageView = val;
-      this.isStatisticsPageView = !this.isGamePageView;
   }
 
 }

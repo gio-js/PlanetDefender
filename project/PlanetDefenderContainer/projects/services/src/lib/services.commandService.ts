@@ -65,18 +65,25 @@ export class CommandService implements ICommandService {
     switch (command.CommandType) {
       case CommandType.Move:
         return this.MoveCommandsExecutor.ExecuteMove(command.RelatedElementId, command.TargetLocation).then(v => {
-          queue.ReleaseWait();
+          if (queue) {
+            queue.ReleaseWait();
+          }
         });
       case CommandType.Attack:
+        const currentUserId = this.applicationService.GetAuthenticationService().GetAuthenticationInfo().UserId;
         return this.AttackCommandsExecutor.ExecuteAttack(command.RelatedElementId, command.TargetElementId).then(v => {
-          queue.ReleaseWait();
+          if (queue) {
+            queue.ReleaseWait();
+          }
 
           // if the target element has still lives available, then continue with another attack command
           const gameArena = this.applicationService.GetCurrentGameArena();
           const relatedElement = gameArena.GetMapElementById(command.RelatedElementId);
           const targetElement = gameArena.GetMapElementById(command.TargetElementId);
 
-          if (targetElement.Lives > 0) {
+
+
+          if (targetElement.Lives > 0 && relatedElement.OwnerUserId === currentUserId) {
             this.EnqueueAttackCommand(targetElement, relatedElement);
           }
         });

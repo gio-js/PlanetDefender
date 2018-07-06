@@ -5,7 +5,7 @@
   display: block;
   cursor: pointer;
   animation: attack 2s infinite;
-  background: url(../assets/images/attack-sprites.png);
+  background: url(./assets/images/attack-sprites.png);
   background-position-x: 0px;
   background-position-y: 0px;
   width: 64px;

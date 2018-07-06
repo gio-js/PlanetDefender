@@ -40,7 +40,7 @@ export class GameHttpService implements IGameService {
       this.socket = socketIOClient.connect(WEBSOCKET_SERVICE_ENDPOINT + "/" + channelId);
 
       this.socket.on(WEBSOCKET_EVENT_NEW_PLAYER_JOINED, (arena) => {
-        console.log("Received message" + JSON.stringify(arena));
+        console.log("Received message, join player" + JSON.stringify(arena));
 
         // regenerate arena object
         const arenaInstance = GameArenaFactory.Create(JSON.parse(arena));
@@ -50,14 +50,14 @@ export class GameHttpService implements IGameService {
       });
 
       this.socket.on(WEBSOCKET_COMMAND_ACCEPTED, (command) => {
-        console.log("Received message" + JSON.stringify(command));
+        console.log("Received message, accepted command" + JSON.stringify(command));
 
         // regenerate arena object
         this.OnCommandAccepted(command);
       });
 
       this.socket.on(WEBSOCKET_COMMAND_REJECTED, (command) => {
-        console.log("Received message" + JSON.stringify(command));
+        console.log("Received message, rejected command" + JSON.stringify(command));
 
         // regenerate arena object
         this.OnCommandRejected(command);
